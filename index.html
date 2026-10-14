@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninja Scripts — Scripts e Executores para Roblox</title>
+    <title>NinjaExec Ofice — Scripts, Executores, Macros e Flags para Roblox</title>
     <meta name="description" content="Biblioteca colaborativa de scripts para jogos do Roblox (Blox Fruits, Adopt Me!, Brookhaven e mais) e lista de executores oficiais.">
-    <meta property="og:title" content="Ninja Scripts">
+    <meta property="og:title" content="NinjaExec Ofice">
     <meta property="og:description" content="Biblioteca colaborativa de scripts para jogos do Roblox e executores oficiais.">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#0a0e14">
@@ -330,6 +330,57 @@
         .profile-scripts-list { max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
         .profile-script-item { background: var(--bg-color); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
 
+        /* ============== DISCORD ============== */
+        .btn-discord {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: #5865f2; color: #fff; text-decoration: none;
+            padding: 10px 16px; border-radius: var(--radius-sm);
+            font-weight: 600; font-size: 14px; white-space: nowrap;
+            transition: all 0.2s var(--ease); box-shadow: 0 4px 12px rgba(88,101,242,0.35);
+        }
+        .btn-discord:hover { background: #4752c4; transform: translateY(-1px); }
+        .discord-banner {
+            display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+            margin-top: 34px; padding: 18px 22px; border-radius: var(--radius-md);
+            background: linear-gradient(135deg, rgba(88,101,242,0.16), rgba(37,99,235,0.08));
+            border: 1px solid rgba(88,101,242,0.35);
+        }
+        .discord-banner strong { display: block; font-size: 15px; margin-bottom: 3px; }
+        .discord-banner span { font-size: 13px; color: var(--text-muted); }
+
+        /* ============== COMENTÁRIOS ============== */
+        .comment-form { background: var(--panel-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px; }
+        .comment-form textarea {
+            width: 100%; resize: vertical; min-height: 84px; padding: 12px; border-radius: var(--radius-sm);
+            background: var(--bg-color); border: 1px solid var(--border); color: white; font-family: inherit; font-size: 14px;
+        }
+        .comment-form textarea:focus { outline: none; border-color: var(--accent); }
+        .comment-form-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; gap: 12px; }
+        .comment-count { font-size: 12px; color: var(--text-faint); }
+        .comment-login-hint {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+            background: var(--panel-bg); border: 1px dashed var(--border-strong); border-radius: var(--radius-md);
+            padding: 14px 18px; margin-bottom: 18px; color: var(--text-muted); font-size: 14px;
+        }
+        .comment-list { display: flex; flex-direction: column; gap: 12px; }
+        .comment-card {
+            display: flex; gap: 12px; background: var(--panel-bg); border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 14px 16px; animation: fadeInUp 0.35s var(--ease) both;
+        }
+        .comment-card.is-owner { border-color: rgba(245,158,11,0.45); }
+        .comment-avatar {
+            width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--accent), var(--danger));
+            display: flex; align-items: center; justify-content: center; font-weight: 800; color: white;
+        }
+        .comment-body { min-width: 0; flex: 1; }
+        .comment-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+        .comment-author { font-weight: 700; font-size: 14px; }
+        .comment-date { font-size: 11.5px; color: var(--text-faint); }
+        .comment-text { font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; color: #e2e8f0; }
+        .comment-delete { margin-left: auto; background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 12px; font-weight: 600; padding: 2px 6px; border-radius: 6px; }
+        .comment-delete:hover { color: var(--danger); background: var(--danger-soft); }
+
         /* ============== FOOTER ============== */
         .footer { text-align: center; color: var(--text-faint); font-size: 12.5px; margin-top: 46px; padding: 24px 0 10px; border-top: 1px solid var(--border); }
         .footer-brand { font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
@@ -454,17 +505,19 @@
                 </svg>
             </div>
             <div class="title">
-                <h1>Ninja Scripts</h1>
+                <h1>NinjaExec Ofice</h1>
                 <div class="sync-status"><div class="dot"></div> Nuvem sincronizada</div>
             </div>
         </div>
 
         <div class="header-actions" id="guestActions">
+            <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-outline" onclick="openAuthModal('login')">Entrar</button>
             <button class="btn-primary" onclick="openAuthModal('register')">Criar Conta</button>
         </div>
 
         <div class="header-actions" id="userActions" style="display:none;">
+            <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-primary" id="postScriptBtn" onclick="openScriptModal()">+ Postar Script</button>
             <div class="user-menu" id="userMenu">
                 <button class="user-chip" id="userChipBtn" onclick="toggleUserDropdown()" aria-haspopup="true" aria-expanded="false">
@@ -489,6 +542,9 @@
         </button>
         <button class="main-nav-btn" id="navMacrosBtn" role="tab" aria-selected="false" aria-controls="macrosSection" onclick="switchSection('macros')" onkeydown="navKeydown(event,'macros')">
             <span class="main-nav-icon">&#x26A1;</span> Macros &amp; Flags
+        </button>
+        <button class="main-nav-btn" id="navCommentsBtn" role="tab" aria-selected="false" aria-controls="commentsSection" onclick="switchSection('comments')" onkeydown="navKeydown(event,'comments')">
+            <span class="main-nav-icon">&#x1F4AC;</span> Comentários
         </button>
     </nav>
 
@@ -541,8 +597,43 @@
         </div>
     </div>
 
+    <!-- ===================== SEÇÃO: COMENTÁRIOS ===================== -->
+    <div id="commentsSection" role="tabpanel" aria-labelledby="navCommentsBtn" style="display:none;">
+        <div class="section-header">
+            <div>
+                <h2>&#x1F4AC; Comentários</h2>
+                <p class="section-subtitle">Deixe sua dúvida, sugestão ou opinião. Seja respeitoso.</p>
+            </div>
+        </div>
+
+        <div class="comment-form" id="commentFormBox" style="display:none;">
+            <label for="commentInput" class="sr-only" style="position:absolute; left:-9999px;">Seu comentário</label>
+            <textarea id="commentInput" rows="3" maxlength="500" placeholder="Escreva seu comentário..." oninput="updateCommentCount()"></textarea>
+            <div class="comment-form-footer">
+                <span class="comment-count" id="commentCount">0/500</span>
+                <button class="btn-primary" id="commentSubmitBtn" onclick="postComment()" type="button">Comentar</button>
+            </div>
+        </div>
+        <div class="comment-login-hint" id="commentLoginHint">
+            <span>Entre na sua conta para comentar.</span>
+            <button class="btn-outline" onclick="openAuthModal('login')" type="button">Entrar</button>
+        </div>
+
+        <div id="commentsArea">
+            <div class="skeleton-card"><div class="skeleton-box" style="width:42px;height:42px;"></div><div style="flex:1"><div class="skeleton-box" style="height:14px;width:30%;margin-bottom:8px;"></div><div class="skeleton-box" style="height:12px;width:70%;"></div></div></div>
+        </div>
+    </div>
+
+    <div class="discord-banner">
+        <div>
+            <strong>Nosso grupo no Discord</strong>
+            <span>Entre no grupo para falar com a gente.</span>
+        </div>
+        <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Entrar no Discord</a>
+    </div>
+
     <div class="footer">
-        <div class="footer-brand">&#x1F977; Ninja Scripts</div>
+        <div class="footer-brand">&#x1F977; NinjaExec Ofice</div>
         <div class="footer-version">v2.0 · Feito para a comunidade Roblox · © <span id="footerYear"></span></div>
     </div>
 </div>
@@ -656,17 +747,21 @@
         </div>
         <div class="form-group">
             <label for="macroKind">Tipo</label>
-            <select id="macroKind">
+            <select id="macroKind" onchange="updateMacroFormFields()">
                 <option value="macro">&#x2328;&#xFE0F; Macro</option>
                 <option value="flag">&#x1F6A9; Flag</option>
             </select>
+        </div>
+        <div class="form-group" id="macroUrlGroup">
+            <label for="macroUrl">Link do macro (abre ao clicar em &quot;Abrir link&quot;)</label>
+            <input type="text" id="macroUrl" placeholder="https://...">
         </div>
         <div class="form-group">
             <label for="macroDesc">Descrição (opcional)</label>
             <textarea id="macroDesc" rows="2" placeholder="Para que serve, versão, observações..."></textarea>
         </div>
         <div class="form-group">
-            <label for="macroContent">Conteúdo (macro ou flags)</label>
+            <label for="macroContent" id="macroContentLabel">Conteúdo</label>
             <textarea id="macroContent" rows="6" placeholder="Cole aqui o macro ou o JSON das flags..." spellcheck="false"></textarea>
         </div>
         <div class="modal-actions">
@@ -748,6 +843,12 @@
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;');
+    }
+
+    // Só deixa passar links http/https (evita "javascript:" etc. em href)
+    function safeUrl(u) {
+        const v = String(u ?? '').trim();
+        return /^https?:\/\//i.test(v) ? v : '';
     }
 
     function formatDate(iso) {
@@ -858,6 +959,8 @@
         filterScripts();
         renderExecutors();
         renderMacros();
+        updateCommentFormVisibility();
+        renderComments();
     }
 
     function toggleUserDropdown() {
@@ -949,7 +1052,7 @@
 
     /* ===================== NAVEGAÇÃO PRINCIPAL ===================== */
     // Para adicionar outra aba no futuro: crie <id>Section + nav<Id>Btn e inclua o nome aqui.
-    const SECTIONS = ['scripts', 'executors', 'macros'];
+    const SECTIONS = ['scripts', 'executors', 'macros', 'comments'];
     function navButtonId(section) {
         return 'nav' + section.charAt(0).toUpperCase() + section.slice(1) + 'Btn';
     }
@@ -1256,7 +1359,7 @@
                         </div>
                     </div>
                     <div class="executor-actions">
-                        <a class="btn-outline" href="${escapeHtml(ex.url)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Abrir</a>
+                        <a class="btn-outline" href="${escapeHtml(safeUrl(ex.url) || '#')}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Abrir</a>
                         ${isAdmin ? `<button class="btn-outline" onclick="openExecutorModal(${ex.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
                         ${isAdmin ? `<button class="btn-delete" onclick="deleteExecutor(${ex.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
                     </div>
@@ -1416,14 +1519,17 @@
                         <div style="min-width:0; flex:1;">
                             <h3>${escapeHtml(m.name)} <span class="kind-badge ${k.cls}">${k.label}</span></h3>
                             ${m.description ? `<p>${escapeHtml(m.description)}</p>` : ''}
-                            <details class="macro-details">
+                            ${m.content ? `<details class="macro-details">
                                 <summary>Ver conteúdo</summary>
                                 <pre>${escapeHtml(m.content)}</pre>
-                            </details>
+                            </details>` : ''}
                         </div>
                     </div>
                     <div class="executor-actions">
-                        <button class="btn-outline btn-copy" onclick="copyMacro(this, ${m.id})" type="button">&#x1F4CB; Copiar</button>
+                        ${m.kind === 'flag'
+                            ? `<button class="btn-primary" onclick="downloadFlag(${m.id})" type="button">&#x2B07;&#xFE0F; Baixar</button>`
+                            : (safeUrl(m.url) ? `<a class="btn-primary" href="${escapeHtml(safeUrl(m.url))}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Abrir link</a>` : '')}
+                        ${m.content ? `<button class="btn-outline btn-copy" onclick="copyMacro(this, ${m.id})" type="button">&#x1F4CB; Copiar</button>` : ''}
                         ${isAdmin ? `<button class="btn-outline" onclick="openMacroModal(${m.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
                         ${isAdmin ? `<button class="btn-delete" onclick="deleteMacro(${m.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
                     </div>
@@ -1458,6 +1564,33 @@
         }
     }
 
+    // Mostra o campo de link só para macros; ajusta o texto do conteúdo conforme o tipo
+    function updateMacroFormFields() {
+        const isFlag = document.getElementById('macroKind').value === 'flag';
+        document.getElementById('macroUrlGroup').style.display = isFlag ? 'none' : 'block';
+        document.getElementById('macroContentLabel').textContent = isFlag ? 'Conteúdo das flags (JSON) — será baixado como arquivo' : 'Conteúdo do macro (opcional se tiver link)';
+        document.getElementById('macroContent').placeholder = isFlag ? 'Cole aqui o JSON das flags...' : 'Cole aqui o macro (opcional se você colocou um link)...';
+    }
+
+    // Baixa as flags como arquivo (.json se o conteúdo for JSON válido, senão .txt)
+    function downloadFlag(id) {
+        const m = macrosData.find(x => x.id === id);
+        if (!m || !m.content) return showToast('Esta flag está sem conteúdo.', 'warning');
+        let text = m.content;
+        let ext = 'txt';
+        try { text = JSON.stringify(JSON.parse(m.content), null, 2); ext = 'json'; } catch (e) { /* mantém o texto original */ }
+        const slug = (m.name || 'flags').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase() || 'flags';
+        const blob = new Blob([text], { type: ext === 'json' ? 'application/json' : 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = slug + '.' + ext;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        showToast('Download iniciado!', 'success');
+    }
+
     function openMacroModal(id) {
         if (!isAdmin) return showToast('Só o administrador pode adicionar macros e flags.', 'error');
 
@@ -1465,7 +1598,8 @@
         const kindSelect = document.getElementById('macroKind');
         const descInput = document.getElementById('macroDesc');
         const contentInput = document.getElementById('macroContent');
-        [nameInput, contentInput].forEach(el => el.classList.remove('input-error'));
+        const urlInput = document.getElementById('macroUrl');
+        [nameInput, contentInput, urlInput].forEach(el => el.classList.remove('input-error'));
 
         if (id) {
             const m = macrosData.find(x => x.id === id);
@@ -1476,7 +1610,8 @@
             nameInput.value = m.name;
             kindSelect.value = m.kind;
             descInput.value = m.description || '';
-            contentInput.value = m.content;
+            contentInput.value = m.content || '';
+            urlInput.value = m.url || '';
         } else {
             editingMacroId = null;
             document.getElementById('macroModalTitle').textContent = 'Adicionar Macro / Flag';
@@ -1485,7 +1620,9 @@
             kindSelect.value = macroKindFilter === 'flag' ? 'flag' : 'macro';
             descInput.value = '';
             contentInput.value = '';
+            urlInput.value = '';
         }
+        updateMacroFormFields();
         document.getElementById('macroModal').style.display = 'flex';
         setTimeout(() => nameInput.focus(), 50);
     }
@@ -1504,11 +1641,20 @@
         const kind = document.getElementById('macroKind').value;
         const description = document.getElementById('macroDesc').value.trim();
         const content = contentInput.value;
+        const urlInput = document.getElementById('macroUrl');
+        const rawUrl = urlInput.value.trim();
+        const url = kind === 'macro' && rawUrl ? safeUrl(rawUrl) : '';
 
         nameInput.classList.remove('input-error');
         contentInput.classList.remove('input-error');
+        urlInput.classList.remove('input-error');
         if (!name) { nameInput.classList.add('input-error'); return showToast('Preencha o nome.', 'warning'); }
-        if (!content.trim()) { contentInput.classList.add('input-error'); return showToast('Cole o conteúdo do macro ou das flags.', 'warning'); }
+        if (kind === 'flag') {
+            if (!content.trim()) { contentInput.classList.add('input-error'); return showToast('Cole o JSON das flags para poder baixar.', 'warning'); }
+        } else {
+            if (rawUrl && !url) { urlInput.classList.add('input-error'); return showToast('O link precisa começar com http:// ou https://', 'warning'); }
+            if (!url && !content.trim()) { urlInput.classList.add('input-error'); return showToast('Coloque o link do macro (ou cole o conteúdo).', 'warning'); }
+        }
 
         const btn = document.getElementById('saveMacroBtn');
         if (btn.disabled) return;
@@ -1519,9 +1665,9 @@
         try {
             let error;
             if (editingMacroId) {
-                ({ error } = await sb.from('macros_flags').update({ name, kind, description, content }).eq('id', editingMacroId));
+                ({ error } = await sb.from('macros_flags').update({ name, kind, description, content, url: url || null }).eq('id', editingMacroId));
             } else {
-                ({ error } = await sb.from('macros_flags').insert([{ name, kind, description, content }]));
+                ({ error } = await sb.from('macros_flags').insert([{ name, kind, description, content, url: url || null }]));
             }
 
             if (error) {
@@ -1579,6 +1725,128 @@
         document.getElementById('profileModal').style.display = 'none';
     }
 
+    /* ===================== COMENTÁRIOS ===================== */
+    let commentsData = [];
+    let commentsLoaded = false;
+    let commentAuthors = {};   // cache { user_id: { email, is_admin } }
+
+    function authorLabel(p) {
+        // Mostra só a parte antes do @ (não expõe o e-mail inteiro nos comentários)
+        return p && p.email ? p.email.split('@')[0] : 'Anônimo';
+    }
+
+    function formatDateTime(iso) {
+        if (!iso) return '';
+        try {
+            return new Date(iso).toLocaleString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } catch (e) { return ''; }
+    }
+
+    function updateCommentFormVisibility() {
+        document.getElementById('commentFormBox').style.display = currentUser ? 'block' : 'none';
+        document.getElementById('commentLoginHint').style.display = currentUser ? 'none' : 'flex';
+    }
+
+    function updateCommentCount() {
+        document.getElementById('commentCount').textContent = document.getElementById('commentInput').value.length + '/500';
+    }
+
+    async function fetchComments() {
+        const { data, error } = await sb.from('comments')
+            .select('id, user_id, content, created_at')
+            .order('created_at', { ascending: false })
+            .limit(100);
+
+        if (error) {
+            console.error('Erro ao buscar comentários:', error);
+            document.getElementById('commentsArea').innerHTML = `<div class="empty-state"><div class="empty-icon">&#x1F4E1;</div>${navigator.onLine ? 'Não foi possível carregar os comentários. Tente novamente.' : 'Você está sem internet no momento.'}</div>`;
+            return;
+        }
+
+        commentsData = data || [];
+        const ids = [...new Set(commentsData.map(c => c.user_id).filter(id => id && !commentAuthors[id]))];
+        if (ids.length) {
+            try {
+                const { data: profs, error: pErr } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
+                if (!pErr && profs) profs.forEach(p => { commentAuthors[p.id] = p; });
+            } catch (e) { /* sem autor, mostra "Anônimo" */ }
+        }
+        commentsLoaded = true;
+        renderComments();
+    }
+
+    function renderComments() {
+        if (!commentsLoaded) return;
+        const area = document.getElementById('commentsArea');
+        if (commentsData.length === 0) {
+            area.innerHTML = `<div class="empty-state"><div class="empty-icon">&#x1F4AC;</div><h3 style="margin-bottom:8px;">Nenhum comentário ainda</h3><p>Seja o primeiro a comentar!</p></div>`;
+            return;
+        }
+        let html = '<div class="comment-list">';
+        commentsData.forEach(c => {
+            const author = commentAuthors[c.user_id];
+            const owner = !!(author && author.is_admin);
+            const name = authorLabel(author);
+            const canDelete = currentUser && (isAdmin || c.user_id === currentUser.id);
+            html += `
+                <div class="comment-card ${owner ? 'is-owner' : ''}">
+                    <div class="comment-avatar">${escapeHtml(name.charAt(0).toUpperCase() || '?')}</div>
+                    <div class="comment-body">
+                        <div class="comment-head">
+                            <span class="comment-author">${escapeHtml(name)}</span>
+                            ${owner ? '<span class="admin-badge">&#x1F451; DONO</span>' : ''}
+                            <span class="comment-date">${formatDateTime(c.created_at)}</span>
+                            ${canDelete ? `<button class="comment-delete" onclick="deleteComment(${c.id})" type="button" aria-label="Apagar comentário">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
+                        </div>
+                        <div class="comment-text">${escapeHtml(c.content)}</div>
+                    </div>
+                </div>`;
+        });
+        html += '</div>';
+        area.innerHTML = html;
+    }
+
+    async function postComment() {
+        if (!currentUser) { showToast('Entre na sua conta para comentar.', 'warning'); return openAuthModal('login'); }
+        const input = document.getElementById('commentInput');
+        const content = input.value.trim();
+        input.classList.remove('input-error');
+        if (!content) { input.classList.add('input-error'); return showToast('Escreva alguma coisa antes de comentar.', 'warning'); }
+        if (content.length > 500) { input.classList.add('input-error'); return showToast('O comentário pode ter no máximo 500 caracteres.', 'warning'); }
+
+        const btn = document.getElementById('commentSubmitBtn');
+        if (btn.disabled) return;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> <span>Enviando...</span>';
+
+        try {
+            const { error } = await sb.from('comments').insert([{ content, user_id: currentUser.id }]);
+            if (error) {
+                console.error(error);
+                if (error.message && error.message.includes('Aguarde')) showToast('Aguarde alguns segundos antes de comentar de novo.', 'warning');
+                else showToast(error.code === '42501' ? 'Você não tem permissão para comentar.' : friendlyDbError('Erro ao enviar o comentário.'), 'error');
+            } else {
+                input.value = '';
+                updateCommentCount();
+                showToast('Comentário publicado!', 'success');
+                fetchComments();
+            }
+        } catch (e) {
+            showToast(friendlyDbError(), 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Comentar';
+        }
+    }
+
+    async function deleteComment(id) {
+        if (!currentUser) return;
+        if (!confirm('Apagar este comentário?')) return;
+        const { error } = await sb.from('comments').delete().eq('id', id);
+        if (!error) { fetchComments(); showToast('Comentário apagado.', 'success'); }
+        else { console.error(error); showToast(friendlyDbError('Erro ao apagar o comentário.'), 'error'); }
+    }
+
     /* ===================== INICIALIZAÇÃO ===================== */
     document.getElementById('footerYear').textContent = new Date().getFullYear();
     renderCategoryTabs();
@@ -1587,6 +1855,7 @@
     fetchScripts();
     fetchExecutors();
     fetchMacros();
+    fetchComments();
 </script>
 
 <!-- Fundo animado low-poly (efeito visual, não interfere na funcionalidade do site) -->
