@@ -730,12 +730,16 @@
 <div class="modal-overlay" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" onmousedown="handleBackdropClick(event,'authModal')">
     <div class="modal" onmousedown="event.stopPropagation()">
         <h2 id="authTitle">Entrar</h2>
+        <div class="form-group" id="authUsernameGroup" style="display:none;">
+            <label for="authUsername">&#x1F464; Nome de Usuário <span style="color:var(--text-faint); font-weight:400;">(aparecerá nos seus scripts)</span></label>
+            <input type="text" id="authUsername" maxlength="30" placeholder="Ex: NinjaGamer" autocomplete="username">
+        </div>
         <div class="form-group">
-            <label for="authEmail">E-mail</label>
+            <label for="authEmail" id="authEmailLabel">&#x2709;&#xFE0F; E-mail / Gmail <span id="authEmailHint" style="color:var(--text-faint); font-weight:400; display:none;">(privado, não aparece nos scripts)</span></label>
             <input type="email" id="authEmail" placeholder="seu@email.com" onkeydown="if(event.key==='Enter') handleAuth()" autocomplete="email">
         </div>
         <div class="form-group" id="authPasswordGroup">
-            <label for="authPassword">Senha</label>
+            <label for="authPassword">&#x1F511; Senha</label>
             <div class="password-field-wrap">
                 <input type="password" id="authPassword" placeholder="Mínimo 6 caracteres" onkeydown="if(event.key==='Enter') handleAuth()" autocomplete="current-password">
                 <button type="button" class="password-toggle" onclick="togglePasswordVisibility('authPassword', this)">MOSTRAR</button>
@@ -814,6 +818,13 @@
             <div class="profile-stat">
                 <div class="num" id="profileMemberSince">—</div>
                 <div class="label">MEMBRO DESDE</div>
+            </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label for="profileDisplayNameInput">&#x1F464; Nome de Usuário <span style="color:var(--text-faint); font-weight:400;">(aparece nos seus scripts)</span></label>
+            <div style="display:flex; gap:8px;">
+                <input type="text" id="profileDisplayNameInput" maxlength="30" placeholder="Seu nome de usuário">
+                <button class="btn-primary" onclick="saveProfileDisplayName()" type="button" id="saveDisplayNameBtn" style="white-space:nowrap; padding:8px 16px; font-size:13px;">Salvar Nome</button>
             </div>
         </div>
         <label style="display:block; margin-bottom:8px; font-size:13.5px; font-weight:600; color:#d4d4d8;">Seus scripts</label>
@@ -1022,10 +1033,16 @@
     async function refreshAdminStatus() {
         if (!currentUser) { isAdmin = false; return; }
         try {
-            const { data, error } = await sb.from('profiles').select('is_admin').eq('id', currentUser.id).single();
+            const { data, error } = await sb.from('profiles').select('is_admin, display_name').eq('id', currentUser.id).single();
             isAdmin = !error && data && data.is_admin === true;
             if (currentUser.id) {
-                profilesById[currentUser.id] = { id: currentUser.id, email: currentUser.email, is_admin: isAdmin };
+                const dispName = (data && data.display_name) || (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.username)) || null;
+                profilesById[currentUser.id] = {
+                    id: currentUser.id,
+                    email: currentUser.email,
+                    display_name: dispName,
+                    is_admin: isAdmin
+                };
             }
         } catch (e) {
             isAdmin = false;
@@ -1036,9 +1053,10 @@
         if (currentUser) {
             document.getElementById('guestActions').style.display = 'none';
             document.getElementById('userActions').style.display = 'flex';
-            const email = currentUser.email || '';
-            document.getElementById('userEmailDisplay').innerHTML = escapeHtml(email) + (isAdmin ? ' <span class="admin-badge">&#x1F451; ADMIN</span>' : '');
-            document.getElementById('userAvatar').textContent = email.charAt(0).toUpperCase() || '?';
+            const myProf = profilesById[currentUser.id];
+            const dispName = (myProf && myProf.display_name) || (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.username)) || (currentUser.email ? currentUser.email.split('@')[0] : 'Usuário');
+            document.getElementById('userEmailDisplay').innerHTML = escapeHtml(dispName) + (isAdmin ? ' <span class="admin-badge">&#x1F451; ADMIN</span>' : '');
+            document.getElementById('userAvatar').textContent = dispName.charAt(0).toUpperCase() || '?';
             document.getElementById('postScriptBtn').style.display = 'inline-block';
         } else {
             document.getElementById('guestActions').style.display = 'flex';
@@ -1066,30 +1084,43 @@
 
     function openAuthModal(mode) {
         authMode = mode;
-        document.getElementById('authTitle').innerText = mode === 'login' ? 'Entrar na Conta' : 'Criar Nova Conta';
-        document.getElementById('authSubmitBtn').innerText = mode === 'login' ? 'Entrar' : 'Cadastrar';
-        document.getElementById('forgotPasswordLink').style.display = mode === 'login' ? 'block' : 'none';
+        const isRegister = mode === 'register';
+        document.getElementById('authTitle').innerText = isRegister ? 'Criar Nova Conta' : 'Entrar na Conta';
+        document.getElementById('authSubmitBtn').innerText = isRegister ? 'Cadastrar' : 'Entrar';
+        document.getElementById('forgotPasswordLink').style.display = isRegister ? 'none' : 'block';
+        document.getElementById('authUsernameGroup').style.display = isRegister ? 'block' : 'none';
+        document.getElementById('authEmailHint').style.display = isRegister ? 'inline' : 'none';
         document.getElementById('authModal').style.display = 'flex';
-        setTimeout(() => document.getElementById('authEmail').focus(), 50);
+        setTimeout(() => document.getElementById(isRegister ? 'authUsername' : 'authEmail').focus(), 50);
     }
 
     function closeAuthModal() {
         document.getElementById('authModal').style.display = 'none';
+        document.getElementById('authUsername').value = '';
         document.getElementById('authEmail').value = '';
         document.getElementById('authPassword').value = '';
+        document.getElementById('authUsername').classList.remove('input-error');
         document.getElementById('authEmail').classList.remove('input-error');
         document.getElementById('authPassword').classList.remove('input-error');
     }
 
     async function handleAuth() {
-        const email = document.getElementById('authEmail').value.trim();
-        const password = document.getElementById('authPassword').value;
+        const usernameInput = document.getElementById('authUsername');
         const emailInput = document.getElementById('authEmail');
         const passInput = document.getElementById('authPassword');
+        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passInput.value;
+
+        usernameInput.classList.remove('input-error');
         emailInput.classList.remove('input-error');
         passInput.classList.remove('input-error');
 
-        if (!email) { emailInput.classList.add('input-error'); return showToast('Digite seu e-mail.', 'warning'); }
+        if (authMode === 'register') {
+            if (!username) { usernameInput.classList.add('input-error'); return showToast('Digite um nome de usuário.', 'warning'); }
+            if (username.length < 3) { usernameInput.classList.add('input-error'); return showToast('O nome de usuário precisa ter no mínimo 3 caracteres.', 'warning'); }
+        }
+        if (!email) { emailInput.classList.add('input-error'); return showToast('Digite seu e-mail / Gmail.', 'warning'); }
         if (!password) { passInput.classList.add('input-error'); return showToast('Digite sua senha.', 'warning'); }
         if (authMode === 'register' && password.length < 6) {
             passInput.classList.add('input-error');
@@ -1097,7 +1128,7 @@
         }
 
         const btn = document.getElementById('authSubmitBtn');
-        if (btn.disabled) return; // evita duplo clique
+        if (btn.disabled) return;
         const originalLabel = btn.innerText;
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner"></span>';
@@ -1105,8 +1136,26 @@
         try {
             let error;
             if (authMode === 'register') {
-                ({ error } = await sb.auth.signUp({ email, password }));
-                if (!error) { showToast('Conta criada! Verifique seu e-mail se for solicitado.', 'success'); closeAuthModal(); }
+                const res = await sb.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            display_name: username,
+                            username: username
+                        }
+                    }
+                });
+                error = res.error;
+                if (!error) {
+                    if (res.data && res.data.user) {
+                        try {
+                            await sb.from('profiles').update({ display_name: username }).eq('id', res.data.user.id);
+                        } catch (e) { /* ignore */ }
+                    }
+                    showToast('Conta criada com sucesso! Seja bem-vindo(a), ' + username + '!', 'success');
+                    closeAuthModal();
+                }
             } else {
                 ({ error } = await sb.auth.signInWithPassword({ email, password }));
                 if (!error) { showToast('Login realizado com sucesso!', 'success'); closeAuthModal(); }
@@ -1207,16 +1256,30 @@
         filterScripts();
     }
 
-    // Busca o e-mail e status de admin de quem postou cada script,
+    // Retorna o nome de exibição do autor (Nome de Usuário ou prefixo antes do @).
+    // NUNCA expõe o @gmail.com ou qualquer domínio de e-mail publicamente nos scripts.
+    function getAuthorDisplayName(p) {
+        if (!p) return 'Anônimo';
+        if (p.display_name && p.display_name.trim()) return p.display_name.trim();
+        if (p.email) return p.email.split('@')[0];
+        return 'Anônimo';
+    }
+
+    // Busca o e-mail, nome de exibição e status de admin de quem postou cada script,
     // usando cache pra não repetir consultas.
     async function loadAuthorsFor(list) {
-        const ids = [...new Set(list.map(s => s.user_id).filter(id => id && (!profilesById[id] || profilesById[id].is_admin === undefined)))];
+        const ids = [...new Set(list.map(s => s.user_id).filter(id => id && (!profilesById[id] || profilesById[id].is_admin === undefined || profilesById[id].display_name === undefined)))];
         if (ids.length === 0) return;
         try {
-            const { data, error } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
+            const { data, error } = await sb.from('profiles').select('id, email, is_admin, display_name').in('id', ids);
             if (!error && data) {
                 data.forEach(p => {
-                    profilesById[p.id] = { id: p.id, email: p.email, is_admin: p.is_admin === true };
+                    profilesById[p.id] = {
+                        id: p.id,
+                        email: p.email,
+                        display_name: p.display_name,
+                        is_admin: p.is_admin === true
+                    };
                 });
             }
         } catch (e) { /* autor fica "Anônimo" se não der pra carregar */ }
@@ -1392,7 +1455,7 @@
             const showEdit = currentUser && (isAdmin || s.user_id === currentUser.id);
             const showDelete = isAdmin;
             const profile = s.user_id && profilesById[s.user_id];
-            const author = profile ? profile.email : 'Anônimo';
+            const author = getAuthorDisplayName(profile);
             const isOwner = !!(profile && profile.is_admin) || (currentUser && s.user_id === currentUser.id && isAdmin);
             const copyCount = typeof s.copy_count === 'number' ? s.copy_count : null;
 
@@ -1839,6 +1902,11 @@
         const memberSince = currentUser.created_at ? new Date(currentUser.created_at).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' }) : '—';
         document.getElementById('profileMemberSince').textContent = memberSince;
 
+        const myProf = profilesById[currentUser.id];
+        const dispName = (myProf && myProf.display_name) || (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.username)) || (currentUser.email ? currentUser.email.split('@')[0] : '');
+        const dispInput = document.getElementById('profileDisplayNameInput');
+        if (dispInput) dispInput.value = dispName;
+
         const own = scriptsData.filter(s => s.user_id === currentUser.id);
         document.getElementById('profileScriptCount').textContent = own.length;
 
@@ -1857,6 +1925,40 @@
         closeUserDropdown();
         document.getElementById('profileModal').style.display = 'flex';
     }
+
+    async function saveProfileDisplayName() {
+        if (!currentUser) return;
+        const input = document.getElementById('profileDisplayNameInput');
+        const newName = input.value.trim();
+        if (!newName) return showToast('Digite um nome de usuário.', 'warning');
+        if (newName.length < 3) return showToast('O nome precisa ter pelo menos 3 caracteres.', 'warning');
+
+        const btn = document.getElementById('saveDisplayNameBtn');
+        const orig = btn.innerText;
+        btn.disabled = true;
+        btn.innerText = 'Salvando...';
+
+        try {
+            await sb.auth.updateUser({ data: { display_name: newName, username: newName } });
+            const { error } = await sb.from('profiles').update({ display_name: newName }).eq('id', currentUser.id);
+            if (!error) {
+                if (profilesById[currentUser.id]) {
+                    profilesById[currentUser.id].display_name = newName;
+                }
+                updateUI();
+                filterScripts();
+                showToast('Nome de usuário salvo com sucesso!', 'success');
+            } else {
+                showToast('Erro ao atualizar nome no banco.', 'error');
+            }
+        } catch (e) {
+            showToast('Erro ao salvar nome.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerText = orig;
+        }
+    }
+
     function closeProfileModal() {
         document.getElementById('profileModal').style.display = 'none';
     }
@@ -1867,8 +1969,7 @@
     let commentAuthors = {};   // cache { user_id: { email, is_admin } }
 
     function authorLabel(p) {
-        // Mostra só a parte antes do @ (não expõe o e-mail inteiro nos comentários)
-        return p && p.email ? p.email.split('@')[0] : 'Anônimo';
+        return getAuthorDisplayName(p);
     }
 
     function formatDateTime(iso) {
@@ -1903,7 +2004,7 @@
         const ids = [...new Set(commentsData.map(c => c.user_id).filter(id => id && !commentAuthors[id]))];
         if (ids.length) {
             try {
-                const { data: profs, error: pErr } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
+                const { data: profs, error: pErr } = await sb.from('profiles').select('id, email, is_admin, display_name').in('id', ids);
                 if (!pErr && profs) profs.forEach(p => { commentAuthors[p.id] = p; });
             } catch (e) { /* sem autor, mostra "Anônimo" */ }
         }
