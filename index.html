@@ -117,7 +117,15 @@
         }
 
         .header-actions { display: flex; gap: 10px; align-items: center; }
-        .user-menu { position: relative; display: none; }
+        .user-menu { position: relative; display: block; }
+        .btn-logout {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--danger); border-color: rgba(239, 68, 68, 0.35);
+            font-size: 13.5px; padding: 8px 14px;
+        }
+        .btn-logout:hover {
+            background-color: var(--danger-soft); border-color: var(--danger);
+        }
 
         .user-chip {
             display: flex; align-items: center; gap: 10px;
@@ -597,16 +605,18 @@
             <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-primary" id="postScriptBtn" onclick="openScriptModal()">+ Postar Script</button>
             <div class="user-menu" id="userMenu">
-                <button class="user-chip" id="userChipBtn" onclick="toggleUserDropdown()" aria-haspopup="true" aria-expanded="false">
+                <button class="user-chip" id="userChipBtn" onclick="toggleUserDropdown()" aria-haspopup="true" aria-expanded="false" title="Menu da conta">
                     <span class="user-avatar" id="userAvatar">?</span>
                     <span class="user-chip-email" id="userEmailDisplay"></span>
+                    <span style="font-size:10px; color:var(--text-muted); margin-left:2px;">&#x25BC;</span>
                 </button>
                 <div class="user-dropdown" id="userDropdown" role="menu">
                     <button class="user-dropdown-item" role="menuitem" onclick="openProfileModal()">&#x1F464; Meu Perfil</button>
                     <div class="user-dropdown-divider"></div>
-                    <button class="user-dropdown-item danger" role="menuitem" onclick="logout()">&#x1F6AA; Sair</button>
+                    <button class="user-dropdown-item danger" role="menuitem" onclick="logout()">&#x1F6AA; Sair da Conta</button>
                 </div>
             </div>
+            <button class="btn-outline btn-logout" onclick="logout()" type="button" title="Sair da Conta">&#x1F6AA; Sair</button>
         </div>
     </div>
 
@@ -808,7 +818,8 @@
         </div>
         <label style="display:block; margin-bottom:8px; font-size:13.5px; font-weight:600; color:#d4d4d8;">Seus scripts</label>
         <div class="profile-scripts-list" id="profileScriptsList"></div>
-        <div class="modal-actions">
+        <div class="modal-actions" style="justify-content:space-between;">
+            <button class="btn-delete" onclick="closeProfileModal(); logout();" type="button">&#x1F6AA; Sair da Conta</button>
             <button class="btn-outline" onclick="closeProfileModal()" type="button">Fechar</button>
         </div>
     </div>
