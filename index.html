@@ -477,6 +477,83 @@
             border-radius: var(--radius-sm); max-height: 220px; overflow: auto; font-size: 12px; line-height: 1.5;
             white-space: pre-wrap; overflow-wrap: anywhere; color: #d4d4d8;
         }
+
+        /* ============== OPÇÃO MAIS SEGURA / POSTADO POR DONO ============== */
+        .badge-owner-safe {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(245, 158, 11, 0.16));
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34d399;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 999px;
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.22);
+            letter-spacing: 0.2px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .badge-owner-safe .badge-shield {
+            font-size: 12.5px;
+            filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.7));
+        }
+        .badge-owner-safe .badge-dot {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 9px;
+        }
+        .badge-owner-safe .badge-owner-tag {
+            color: #fbbf24;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .script-card.is-owner-script {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, var(--panel-bg) 100%);
+            position: relative;
+        }
+        .script-card.is-owner-script:hover {
+            border-color: rgba(16, 185, 129, 0.65);
+            box-shadow: 0 8px 28px rgba(16, 185, 129, 0.16);
+        }
+
+        /* ============== MACRO LINK DIRETO ============== */
+        .tag-link-direct {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(37, 99, 235, 0.16);
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            color: #93c5fd;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+        .macro-link-title {
+            color: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s ease;
+        }
+        .macro-link-title:hover {
+            color: #93c5fd;
+        }
+        .macro-link-arrow {
+            font-size: 13px;
+            color: var(--accent);
+            opacity: 0.8;
+            transition: transform 0.2s ease;
+        }
+        .macro-link-title:hover .macro-link-arrow {
+            transform: translate(2px, -2px);
+            opacity: 1;
+        }
         @media (max-width: 640px) {
             .main-nav { gap: 4px; padding: 4px; }
             .main-nav-btn { flex-direction: column; gap: 4px; padding: 10px 4px; font-size: 12px; text-align: center; line-height: 1.2; }
@@ -511,7 +588,7 @@
         </div>
 
         <div class="header-actions" id="guestActions">
-            <a class="btn-discord" href="https://discord.gg/tQj25PkbZ8" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
+            <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-outline" onclick="openAuthModal('login')">Entrar</button>
             <button class="btn-primary" onclick="openAuthModal('register')">Criar Conta</button>
         </div>
@@ -748,21 +825,21 @@
         <div class="form-group">
             <label for="macroKind">Tipo</label>
             <select id="macroKind" onchange="updateMacroFormFields()">
-                <option value="macro">&#x2328;&#xFE0F; Macro</option>
-                <option value="flag">&#x1F6A9; Flag</option>
+                <option value="macro">&#x2328;&#xFE0F; Macro (Link Direto)</option>
+                <option value="flag">&#x1F6A9; Flag (Baixar Arquivo)</option>
             </select>
         </div>
         <div class="form-group" id="macroUrlGroup">
-            <label for="macroUrl">Link do macro (abre ao clicar em &quot;Abrir link&quot;)</label>
-            <input type="text" id="macroUrl" placeholder="https://...">
+            <label for="macroUrl">&#x1F517; Link Direto do Macro <span style="color:var(--text-faint); font-weight:400;">(abre direto em nova aba)</span></label>
+            <input type="text" id="macroUrl" placeholder="https://..." autocomplete="off" autocorrect="off" spellcheck="false">
         </div>
         <div class="form-group">
             <label for="macroDesc">Descrição (opcional)</label>
             <textarea id="macroDesc" rows="2" placeholder="Para que serve, versão, observações..."></textarea>
         </div>
-        <div class="form-group">
-            <label for="macroContent" id="macroContentLabel">Conteúdo</label>
-            <textarea id="macroContent" rows="6" placeholder="Cole aqui o macro ou o JSON das flags..." spellcheck="false"></textarea>
+        <div class="form-group" id="macroContentGroup">
+            <label for="macroContent" id="macroContentLabel">&#x1F4C4; Conteúdo das Flags (JSON) — será baixado como arquivo</label>
+            <textarea id="macroContent" rows="6" placeholder="Cole aqui o JSON das flags..." spellcheck="false"></textarea>
         </div>
         <div class="modal-actions">
             <button class="btn-outline" onclick="closeMacroModal()" type="button">Cancelar</button>
@@ -936,6 +1013,9 @@
         try {
             const { data, error } = await sb.from('profiles').select('is_admin').eq('id', currentUser.id).single();
             isAdmin = !error && data && data.is_admin === true;
+            if (currentUser.id) {
+                profilesById[currentUser.id] = { id: currentUser.id, email: currentUser.email, is_admin: isAdmin };
+            }
         } catch (e) {
             isAdmin = false;
         }
@@ -1116,14 +1196,18 @@
         filterScripts();
     }
 
-    // Busca o e-mail de quem postou cada script (pra mostrar "autor"),
+    // Busca o e-mail e status de admin de quem postou cada script,
     // usando cache pra não repetir consultas.
     async function loadAuthorsFor(list) {
-        const ids = [...new Set(list.map(s => s.user_id).filter(id => id && !profilesById[id]))];
+        const ids = [...new Set(list.map(s => s.user_id).filter(id => id && (!profilesById[id] || profilesById[id].is_admin === undefined)))];
         if (ids.length === 0) return;
         try {
-            const { data, error } = await sb.from('profiles').select('id, email').in('id', ids);
-            if (!error && data) data.forEach(p => { profilesById[p.id] = p; });
+            const { data, error } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
+            if (!error && data) {
+                data.forEach(p => {
+                    profilesById[p.id] = { id: p.id, email: p.email, is_admin: p.is_admin === true };
+                });
+            }
         } catch (e) { /* autor fica "Anônimo" se não der pra carregar */ }
     }
 
@@ -1296,18 +1380,30 @@
         filtered.forEach((s, i) => {
             const showEdit = currentUser && (isAdmin || s.user_id === currentUser.id);
             const showDelete = isAdmin;
-            const author = s.user_id && profilesById[s.user_id] ? profilesById[s.user_id].email : 'Anônimo';
+            const profile = s.user_id && profilesById[s.user_id];
+            const author = profile ? profile.email : 'Anônimo';
+            const isOwner = !!(profile && profile.is_admin) || (currentUser && s.user_id === currentUser.id && isAdmin);
             const copyCount = typeof s.copy_count === 'number' ? s.copy_count : null;
 
             html += `
-                <div class="script-card" style="animation-delay:${Math.min(i, 10) * 0.04}s">
+                <div class="script-card ${isOwner ? 'is-owner-script' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s">
                     <div class="script-info">
-                        <div class="script-icon">${gameIcon(s.game)}</div>
-                        <div style="min-width:0;">
-                            <h3>${escapeHtml(s.name)}</h3>
+                        <div class="script-icon" ${isOwner ? 'style="border: 1px solid rgba(16,185,129,0.45); box-shadow: 0 0 14px rgba(16,185,129,0.25);"' : ''}>${gameIcon(s.game)}</div>
+                        <div style="min-width:0; flex:1;">
+                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+                                <h3 style="margin:0;">${escapeHtml(s.name)}</h3>
+                                ${isOwner ? `
+                                    <span class="badge-owner-safe" title="Opção mais segura — Postado pelo Dono">
+                                        <span class="badge-shield">&#x1F6E1;&#xFE0F;</span>
+                                        <span class="badge-safe-text">Opção mais segura</span>
+                                        <span class="badge-dot">&#x2022;</span>
+                                        <span class="badge-owner-tag">&#x1F451; Postado por Dono</span>
+                                    </span>
+                                ` : ''}
+                            </div>
                             <div class="script-meta-row">
                                 <span class="tag"><span class="tag-icon">${gameIcon(s.game)}</span>${escapeHtml(s.game)}</span>
-                                <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}</span>
+                                <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}${isOwner ? ' <span class="admin-badge">&#x1F451; DONO</span>' : ''}</span>
                                 ${s.created_at ? `<span class="meta-chip">&#x1F5D3;&#xFE0F; ${formatDate(s.created_at)}</span>` : ''}
                                 ${copyCount !== null ? `<span class="meta-chip" data-copy-count="${s.id}">&#x1F525; ${copyCount} cópias</span>` : ''}
                             </div>
@@ -1512,23 +1608,39 @@
         let html = '<div class="executor-list">';
         list.forEach((m, i) => {
             const k = MACRO_KINDS[m.kind] || MACRO_KINDS.macro;
+            const isMacro = m.kind === 'macro';
+            const macroLink = safeUrl(m.url);
+
             html += `
                 <div class="executor-card" style="animation-delay:${Math.min(i, 10) * 0.05}s">
                     <div class="executor-info">
                         <div class="executor-icon">${k.icon}</div>
                         <div style="min-width:0; flex:1;">
-                            <h3>${escapeHtml(m.name)} <span class="kind-badge ${k.cls}">${k.label}</span></h3>
+                            <h3>
+                                ${isMacro && macroLink
+                                    ? `<a class="macro-link-title" href="${escapeHtml(macroLink)}" target="_blank" rel="noopener noreferrer" title="Abrir link direto">
+                                        ${escapeHtml(m.name)} <span class="macro-link-arrow">&#x2197;</span>
+                                       </a>`
+                                    : escapeHtml(m.name)
+                                }
+                                <span class="kind-badge ${k.cls}">${k.label}</span>
+                                ${isMacro ? `<span class="tag-link-direct">&#x1F517; Link Direto</span>` : ''}
+                            </h3>
                             ${m.description ? `<p>${escapeHtml(m.description)}</p>` : ''}
-                            ${m.content ? `<details class="macro-details">
+                            ${isMacro && macroLink ? `<div style="margin-top:6px;"><a href="${escapeHtml(macroLink)}" target="_blank" rel="noopener noreferrer" style="font-size:12px; color:var(--accent); text-decoration:none; word-break:break-all; display:inline-flex; align-items:center; gap:4px;">&#x1F517; ${escapeHtml(macroLink)}</a></div>` : ''}
+                            ${m.content && m.kind === 'flag' ? `<details class="macro-details">
+                                <summary>Ver conteúdo das flags</summary>
+                                <pre>${escapeHtml(m.content)}</pre>
+                            </details>` : (m.content ? `<details class="macro-details">
                                 <summary>Ver conteúdo</summary>
                                 <pre>${escapeHtml(m.content)}</pre>
-                            </details>` : ''}
+                            </details>` : '')}
                         </div>
                     </div>
                     <div class="executor-actions">
                         ${m.kind === 'flag'
-                            ? `<button class="btn-primary" onclick="downloadFlag(${m.id})" type="button">&#x2B07;&#xFE0F; Baixar</button>`
-                            : (safeUrl(m.url) ? `<a class="btn-primary" href="${escapeHtml(safeUrl(m.url))}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Abrir link</a>` : '')}
+                            ? `<button class="btn-primary" onclick="downloadFlag(${m.id})" type="button">&#x2B07;&#xFE0F; Baixar Flags</button>`
+                            : (macroLink ? `<a class="btn-primary" href="${escapeHtml(macroLink)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Link Direto</a>` : '')}
                         ${m.content ? `<button class="btn-outline btn-copy" onclick="copyMacro(this, ${m.id})" type="button">&#x1F4CB; Copiar</button>` : ''}
                         ${isAdmin ? `<button class="btn-outline" onclick="openMacroModal(${m.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
                         ${isAdmin ? `<button class="btn-delete" onclick="deleteMacro(${m.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
@@ -1564,12 +1676,17 @@
         }
     }
 
-    // Mostra o campo de link só para macros; ajusta o texto do conteúdo conforme o tipo
+    // Mostra link direto para macros e oculta conteúdo; para flags, mostra conteúdo para download
     function updateMacroFormFields() {
         const isFlag = document.getElementById('macroKind').value === 'flag';
-        document.getElementById('macroUrlGroup').style.display = isFlag ? 'none' : 'block';
-        document.getElementById('macroContentLabel').textContent = isFlag ? 'Conteúdo das flags (JSON) — será baixado como arquivo' : 'Conteúdo do macro (opcional se tiver link)';
-        document.getElementById('macroContent').placeholder = isFlag ? 'Cole aqui o JSON das flags...' : 'Cole aqui o macro (opcional se você colocou um link)...';
+        const urlGroup = document.getElementById('macroUrlGroup');
+        const contentGroup = document.getElementById('macroContentGroup');
+        const modalTitle = document.getElementById('macroModalTitle');
+        if (urlGroup) urlGroup.style.display = isFlag ? 'none' : 'block';
+        if (contentGroup) contentGroup.style.display = isFlag ? 'block' : 'none';
+        if (!editingMacroId && modalTitle) {
+            modalTitle.textContent = isFlag ? 'Adicionar Flag (Arquivo)' : 'Adicionar Macro (Link Direto)';
+        }
     }
 
     // Baixa as flags como arquivo (.json se o conteúdo for JSON válido, senão .txt)
@@ -1605,7 +1722,7 @@
             const m = macrosData.find(x => x.id === id);
             if (!m) return;
             editingMacroId = id;
-            document.getElementById('macroModalTitle').textContent = 'Editar Macro / Flag';
+            document.getElementById('macroModalTitle').textContent = m.kind === 'macro' ? 'Editar Macro (Link Direto)' : 'Editar Flag';
             document.getElementById('saveMacroBtnLabel').textContent = 'Salvar Alterações';
             nameInput.value = m.name;
             kindSelect.value = m.kind;
@@ -1614,10 +1731,11 @@
             urlInput.value = m.url || '';
         } else {
             editingMacroId = null;
-            document.getElementById('macroModalTitle').textContent = 'Adicionar Macro / Flag';
+            const defaultKind = macroKindFilter === 'flag' ? 'flag' : 'macro';
+            document.getElementById('macroModalTitle').textContent = defaultKind === 'macro' ? 'Adicionar Macro (Link Direto)' : 'Adicionar Flag';
             document.getElementById('saveMacroBtnLabel').textContent = 'Salvar';
             nameInput.value = '';
-            kindSelect.value = macroKindFilter === 'flag' ? 'flag' : 'macro';
+            kindSelect.value = defaultKind;
             descInput.value = '';
             contentInput.value = '';
             urlInput.value = '';
@@ -1652,8 +1770,8 @@
         if (kind === 'flag') {
             if (!content.trim()) { contentInput.classList.add('input-error'); return showToast('Cole o JSON das flags para poder baixar.', 'warning'); }
         } else {
-            if (rawUrl && !url) { urlInput.classList.add('input-error'); return showToast('O link precisa começar com http:// ou https://', 'warning'); }
-            if (!url && !content.trim()) { urlInput.classList.add('input-error'); return showToast('Coloque o link do macro (ou cole o conteúdo).', 'warning'); }
+            if (!rawUrl) { urlInput.classList.add('input-error'); return showToast('Cole o link direto do macro.', 'warning'); }
+            if (!url) { urlInput.classList.add('input-error'); return showToast('O link precisa começar com http:// ou https://', 'warning'); }
         }
 
         const btn = document.getElementById('saveMacroBtn');
@@ -1664,10 +1782,17 @@
 
         try {
             let error;
+            const payload = {
+                name,
+                kind,
+                description: description || null,
+                content: kind === 'flag' ? content : (content || null),
+                url: kind === 'macro' ? url : null
+            };
             if (editingMacroId) {
-                ({ error } = await sb.from('macros_flags').update({ name, kind, description, content, url: url || null }).eq('id', editingMacroId));
+                ({ error } = await sb.from('macros_flags').update(payload).eq('id', editingMacroId));
             } else {
-                ({ error } = await sb.from('macros_flags').insert([{ name, kind, description, content, url: url || null }]));
+                ({ error } = await sb.from('macros_flags').insert([payload]));
             }
 
             if (error) {
