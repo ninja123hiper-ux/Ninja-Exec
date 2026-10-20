@@ -117,15 +117,7 @@
         }
 
         .header-actions { display: flex; gap: 10px; align-items: center; }
-        .user-menu { position: relative; display: block; }
-        .btn-logout {
-            display: inline-flex; align-items: center; gap: 6px;
-            color: var(--danger); border-color: rgba(239, 68, 68, 0.35);
-            font-size: 13.5px; padding: 8px 14px;
-        }
-        .btn-logout:hover {
-            background-color: var(--danger-soft); border-color: var(--danger);
-        }
+        .user-menu { position: relative; display: none; }
 
         .user-chip {
             display: flex; align-items: center; gap: 10px;
@@ -250,6 +242,12 @@
             padding: 18px 20px; display: flex; justify-content: space-between; align-items: center;
             transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color .2s var(--ease);
             gap: 16px; flex-wrap: wrap;
+        }
+        .script-card.owner-post { border-color: rgba(16,185,129,0.4); }
+        .owner-badge {
+            display: inline-flex; align-items: center; gap: 6px; margin: 0 0 8px;
+            background: rgba(16,185,129,0.14); color: var(--success); border: 1px solid rgba(16,185,129,0.35);
+            font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px;
         }
         .script-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); border-color: var(--border-strong); }
 
@@ -386,8 +384,16 @@
         .comment-author { font-weight: 700; font-size: 14px; }
         .comment-date { font-size: 11.5px; color: var(--text-faint); }
         .comment-text { font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; color: #e2e8f0; }
-        .comment-delete { margin-left: auto; background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 12px; font-weight: 600; padding: 2px 6px; border-radius: 6px; }
-        .comment-delete:hover { color: var(--danger); background: var(--danger-soft); }
+        .comment-actions { margin-left: auto; display: inline-flex; gap: 4px; }
+        .comment-action { background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; font-family: inherit; }
+        .comment-action:hover { color: var(--text-main); background: var(--panel-hover); }
+        .comment-action.danger:hover { color: var(--danger); background: var(--danger-soft); }
+        .comment-edit-input {
+            width: 100%; resize: vertical; min-height: 70px; padding: 10px; border-radius: var(--radius-sm);
+            background: var(--bg-color); border: 1px solid var(--border); color: white; font-family: inherit; font-size: 14px; margin-top: 4px;
+        }
+        .comment-edit-input:focus { outline: none; border-color: var(--accent); }
+        .comment-edit-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
 
         /* ============== FOOTER ============== */
         .footer { text-align: center; color: var(--text-faint); font-size: 12.5px; margin-top: 46px; padding: 24px 0 10px; border-top: 1px solid var(--border); }
@@ -485,83 +491,6 @@
             border-radius: var(--radius-sm); max-height: 220px; overflow: auto; font-size: 12px; line-height: 1.5;
             white-space: pre-wrap; overflow-wrap: anywhere; color: #d4d4d8;
         }
-
-        /* ============== OPÇÃO MAIS SEGURA / POSTADO POR DONO ============== */
-        .badge-owner-safe {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(245, 158, 11, 0.16));
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34d399;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 999px;
-            box-shadow: 0 0 14px rgba(16, 185, 129, 0.22);
-            letter-spacing: 0.2px;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-        .badge-owner-safe .badge-shield {
-            font-size: 12.5px;
-            filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.7));
-        }
-        .badge-owner-safe .badge-dot {
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 9px;
-        }
-        .badge-owner-safe .badge-owner-tag {
-            color: #fbbf24;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-        }
-        .script-card.is-owner-script {
-            border-color: rgba(16, 185, 129, 0.4);
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, var(--panel-bg) 100%);
-            position: relative;
-        }
-        .script-card.is-owner-script:hover {
-            border-color: rgba(16, 185, 129, 0.65);
-            box-shadow: 0 8px 28px rgba(16, 185, 129, 0.16);
-        }
-
-        /* ============== MACRO LINK DIRETO ============== */
-        .tag-link-direct {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(37, 99, 235, 0.16);
-            border: 1px solid rgba(37, 99, 235, 0.4);
-            color: #93c5fd;
-            font-size: 10.5px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 999px;
-        }
-        .macro-link-title {
-            color: inherit;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: color 0.2s ease;
-        }
-        .macro-link-title:hover {
-            color: #93c5fd;
-        }
-        .macro-link-arrow {
-            font-size: 13px;
-            color: var(--accent);
-            opacity: 0.8;
-            transition: transform 0.2s ease;
-        }
-        .macro-link-title:hover .macro-link-arrow {
-            transform: translate(2px, -2px);
-            opacity: 1;
-        }
         @media (max-width: 640px) {
             .main-nav { gap: 4px; padding: 4px; }
             .main-nav-btn { flex-direction: column; gap: 4px; padding: 10px 4px; font-size: 12px; text-align: center; line-height: 1.2; }
@@ -596,27 +525,25 @@
         </div>
 
         <div class="header-actions" id="guestActions">
-            <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
+            <a class="btn-discord" href="https://discord.gg/tQj25PkbZ8" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-outline" onclick="openAuthModal('login')">Entrar</button>
             <button class="btn-primary" onclick="openAuthModal('register')">Criar Conta</button>
         </div>
 
         <div class="header-actions" id="userActions" style="display:none;">
-            <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
+            <a class="btn-discord" href="https://discord.gg/tQj25PkbZ8" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-primary" id="postScriptBtn" onclick="openScriptModal()">+ Postar Script</button>
             <div class="user-menu" id="userMenu">
-                <button class="user-chip" id="userChipBtn" onclick="toggleUserDropdown()" aria-haspopup="true" aria-expanded="false" title="Menu da conta">
+                <button class="user-chip" id="userChipBtn" onclick="toggleUserDropdown()" aria-haspopup="true" aria-expanded="false">
                     <span class="user-avatar" id="userAvatar">?</span>
                     <span class="user-chip-email" id="userEmailDisplay"></span>
-                    <span style="font-size:10px; color:var(--text-muted); margin-left:2px;">&#x25BC;</span>
                 </button>
                 <div class="user-dropdown" id="userDropdown" role="menu">
                     <button class="user-dropdown-item" role="menuitem" onclick="openProfileModal()">&#x1F464; Meu Perfil</button>
                     <div class="user-dropdown-divider"></div>
-                    <button class="user-dropdown-item danger" role="menuitem" onclick="logout()">&#x1F6AA; Sair da Conta</button>
+                    <button class="user-dropdown-item danger" role="menuitem" onclick="logout()">&#x1F6AA; Sair</button>
                 </div>
             </div>
-            <button class="btn-outline btn-logout" onclick="logout()" type="button" title="Sair da Conta">&#x1F6AA; Sair</button>
         </div>
     </div>
 
@@ -716,7 +643,7 @@
             <strong>Nosso grupo no Discord</strong>
             <span>Entre no grupo para falar com a gente.</span>
         </div>
-        <a class="btn-discord" href="https://discord.gg/fJ7F5GytB" target="_blank" rel="noopener noreferrer">&#x1F4AC; Entrar no Discord</a>
+        <a class="btn-discord" href="https://discord.gg/tQj25PkbZ8" target="_blank" rel="noopener noreferrer">&#x1F4AC; Entrar no Discord</a>
     </div>
 
     <div class="footer">
@@ -730,16 +657,12 @@
 <div class="modal-overlay" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" onmousedown="handleBackdropClick(event,'authModal')">
     <div class="modal" onmousedown="event.stopPropagation()">
         <h2 id="authTitle">Entrar</h2>
-        <div class="form-group" id="authUsernameGroup" style="display:none;">
-            <label for="authUsername">&#x1F464; Nome de Usuário <span style="color:var(--text-faint); font-weight:400;">(aparecerá nos seus scripts)</span></label>
-            <input type="text" id="authUsername" maxlength="30" placeholder="Ex: NinjaGamer" autocomplete="username">
-        </div>
         <div class="form-group">
-            <label for="authEmail" id="authEmailLabel">&#x2709;&#xFE0F; E-mail / Gmail <span id="authEmailHint" style="color:var(--text-faint); font-weight:400; display:none;">(privado, não aparece nos scripts)</span></label>
+            <label for="authEmail">E-mail</label>
             <input type="email" id="authEmail" placeholder="seu@email.com" onkeydown="if(event.key==='Enter') handleAuth()" autocomplete="email">
         </div>
         <div class="form-group" id="authPasswordGroup">
-            <label for="authPassword">&#x1F511; Senha</label>
+            <label for="authPassword">Senha</label>
             <div class="password-field-wrap">
                 <input type="password" id="authPassword" placeholder="Mínimo 6 caracteres" onkeydown="if(event.key==='Enter') handleAuth()" autocomplete="current-password">
                 <button type="button" class="password-toggle" onclick="togglePasswordVisibility('authPassword', this)">MOSTRAR</button>
@@ -820,17 +743,9 @@
                 <div class="label">MEMBRO DESDE</div>
             </div>
         </div>
-        <div class="form-group" style="margin-bottom: 16px;">
-            <label for="profileDisplayNameInput">&#x1F464; Nome de Usuário <span style="color:var(--text-faint); font-weight:400;">(aparece nos seus scripts)</span></label>
-            <div style="display:flex; gap:8px;">
-                <input type="text" id="profileDisplayNameInput" maxlength="30" placeholder="Seu nome de usuário">
-                <button class="btn-primary" onclick="saveProfileDisplayName()" type="button" id="saveDisplayNameBtn" style="white-space:nowrap; padding:8px 16px; font-size:13px;">Salvar Nome</button>
-            </div>
-        </div>
         <label style="display:block; margin-bottom:8px; font-size:13.5px; font-weight:600; color:#d4d4d8;">Seus scripts</label>
         <div class="profile-scripts-list" id="profileScriptsList"></div>
-        <div class="modal-actions" style="justify-content:space-between;">
-            <button class="btn-delete" onclick="closeProfileModal(); logout();" type="button">&#x1F6AA; Sair da Conta</button>
+        <div class="modal-actions">
             <button class="btn-outline" onclick="closeProfileModal()" type="button">Fechar</button>
         </div>
     </div>
@@ -847,21 +762,21 @@
         <div class="form-group">
             <label for="macroKind">Tipo</label>
             <select id="macroKind" onchange="updateMacroFormFields()">
-                <option value="macro">&#x2328;&#xFE0F; Macro (Link Direto)</option>
-                <option value="flag">&#x1F6A9; Flag (Baixar Arquivo)</option>
+                <option value="macro">&#x2328;&#xFE0F; Macro</option>
+                <option value="flag">&#x1F6A9; Flag</option>
             </select>
         </div>
         <div class="form-group" id="macroUrlGroup">
-            <label for="macroUrl">&#x1F517; Link Direto do Macro <span style="color:var(--text-faint); font-weight:400;">(abre direto em nova aba)</span></label>
-            <input type="text" id="macroUrl" placeholder="https://..." autocomplete="off" autocorrect="off" spellcheck="false">
+            <label for="macroUrl">Link do macro (abre ao clicar em &quot;Abrir link&quot;)</label>
+            <input type="text" id="macroUrl" placeholder="https://...">
         </div>
         <div class="form-group">
             <label for="macroDesc">Descrição (opcional)</label>
             <textarea id="macroDesc" rows="2" placeholder="Para que serve, versão, observações..."></textarea>
         </div>
-        <div class="form-group" id="macroContentGroup">
-            <label for="macroContent" id="macroContentLabel">&#x1F4C4; Conteúdo das Flags (JSON) — será baixado como arquivo</label>
-            <textarea id="macroContent" rows="6" placeholder="Cole aqui o JSON das flags..." spellcheck="false"></textarea>
+        <div class="form-group">
+            <label for="macroContent" id="macroContentLabel">Conteúdo</label>
+            <textarea id="macroContent" rows="6" placeholder="Cole aqui o macro ou o JSON das flags..." spellcheck="false"></textarea>
         </div>
         <div class="modal-actions">
             <button class="btn-outline" onclick="closeMacroModal()" type="button">Cancelar</button>
@@ -1033,17 +948,8 @@
     async function refreshAdminStatus() {
         if (!currentUser) { isAdmin = false; return; }
         try {
-            const { data, error } = await sb.from('profiles').select('is_admin, display_name').eq('id', currentUser.id).single();
+            const { data, error } = await sb.from('profiles').select('is_admin').eq('id', currentUser.id).single();
             isAdmin = !error && data && data.is_admin === true;
-            if (currentUser.id) {
-                const dispName = (data && data.display_name) || (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.username)) || null;
-                profilesById[currentUser.id] = {
-                    id: currentUser.id,
-                    email: currentUser.email,
-                    display_name: dispName,
-                    is_admin: isAdmin
-                };
-            }
         } catch (e) {
             isAdmin = false;
         }
@@ -1053,10 +959,9 @@
         if (currentUser) {
             document.getElementById('guestActions').style.display = 'none';
             document.getElementById('userActions').style.display = 'flex';
-            const myProf = profilesById[currentUser.id];
-            const dispName = (myProf && myProf.display_name) || (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.username)) || (currentUser.email ? currentUser.email.split('@')[0] : 'Usuário');
-            document.getElementById('userEmailDisplay').innerHTML = escapeHtml(dispName) + (isAdmin ? ' <span class="admin-badge">&#x1F451; ADMIN</span>' : '');
-            document.getElementById('userAvatar').textContent = dispName.charAt(0).toUpperCase() || '?';
+            const email = currentUser.email || '';
+            document.getElementById('userEmailDisplay').innerHTML = escapeHtml(email) + (isAdmin ? ' <span class="admin-badge">&#x1F451; ADMIN</span>' : '');
+            document.getElementById('userAvatar').textContent = email.charAt(0).toUpperCase() || '?';
             document.getElementById('postScriptBtn').style.display = 'inline-block';
         } else {
             document.getElementById('guestActions').style.display = 'flex';
@@ -1084,43 +989,30 @@
 
     function openAuthModal(mode) {
         authMode = mode;
-        const isRegister = mode === 'register';
-        document.getElementById('authTitle').innerText = isRegister ? 'Criar Nova Conta' : 'Entrar na Conta';
-        document.getElementById('authSubmitBtn').innerText = isRegister ? 'Cadastrar' : 'Entrar';
-        document.getElementById('forgotPasswordLink').style.display = isRegister ? 'none' : 'block';
-        document.getElementById('authUsernameGroup').style.display = isRegister ? 'block' : 'none';
-        document.getElementById('authEmailHint').style.display = isRegister ? 'inline' : 'none';
+        document.getElementById('authTitle').innerText = mode === 'login' ? 'Entrar na Conta' : 'Criar Nova Conta';
+        document.getElementById('authSubmitBtn').innerText = mode === 'login' ? 'Entrar' : 'Cadastrar';
+        document.getElementById('forgotPasswordLink').style.display = mode === 'login' ? 'block' : 'none';
         document.getElementById('authModal').style.display = 'flex';
-        setTimeout(() => document.getElementById(isRegister ? 'authUsername' : 'authEmail').focus(), 50);
+        setTimeout(() => document.getElementById('authEmail').focus(), 50);
     }
 
     function closeAuthModal() {
         document.getElementById('authModal').style.display = 'none';
-        document.getElementById('authUsername').value = '';
         document.getElementById('authEmail').value = '';
         document.getElementById('authPassword').value = '';
-        document.getElementById('authUsername').classList.remove('input-error');
         document.getElementById('authEmail').classList.remove('input-error');
         document.getElementById('authPassword').classList.remove('input-error');
     }
 
     async function handleAuth() {
-        const usernameInput = document.getElementById('authUsername');
+        const email = document.getElementById('authEmail').value.trim();
+        const password = document.getElementById('authPassword').value;
         const emailInput = document.getElementById('authEmail');
         const passInput = document.getElementById('authPassword');
-        const username = usernameInput.value.trim();
-        const email = emailInput.value.trim();
-        const password = passInput.value;
-
-        usernameInput.classList.remove('input-error');
         emailInput.classList.remove('input-error');
         passInput.classList.remove('input-error');
 
-        if (authMode === 'register') {
-            if (!username) { usernameInput.classList.add('input-error'); return showToast('Digite um nome de usuário.', 'warning'); }
-            if (username.length < 3) { usernameInput.classList.add('input-error'); return showToast('O nome de usuário precisa ter no mínimo 3 caracteres.', 'warning'); }
-        }
-        if (!email) { emailInput.classList.add('input-error'); return showToast('Digite seu e-mail / Gmail.', 'warning'); }
+        if (!email) { emailInput.classList.add('input-error'); return showToast('Digite seu e-mail.', 'warning'); }
         if (!password) { passInput.classList.add('input-error'); return showToast('Digite sua senha.', 'warning'); }
         if (authMode === 'register' && password.length < 6) {
             passInput.classList.add('input-error');
@@ -1128,7 +1020,7 @@
         }
 
         const btn = document.getElementById('authSubmitBtn');
-        if (btn.disabled) return;
+        if (btn.disabled) return; // evita duplo clique
         const originalLabel = btn.innerText;
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner"></span>';
@@ -1136,26 +1028,8 @@
         try {
             let error;
             if (authMode === 'register') {
-                const res = await sb.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            display_name: username,
-                            username: username
-                        }
-                    }
-                });
-                error = res.error;
-                if (!error) {
-                    if (res.data && res.data.user) {
-                        try {
-                            await sb.from('profiles').update({ display_name: username }).eq('id', res.data.user.id);
-                        } catch (e) { /* ignore */ }
-                    }
-                    showToast('Conta criada com sucesso! Seja bem-vindo(a), ' + username + '!', 'success');
-                    closeAuthModal();
-                }
+                ({ error } = await sb.auth.signUp({ email, password }));
+                if (!error) { showToast('Conta criada! Verifique seu e-mail se for solicitado.', 'success'); closeAuthModal(); }
             } else {
                 ({ error } = await sb.auth.signInWithPassword({ email, password }));
                 if (!error) { showToast('Login realizado com sucesso!', 'success'); closeAuthModal(); }
@@ -1256,32 +1130,14 @@
         filterScripts();
     }
 
-    // Retorna o nome de exibição do autor (Nome de Usuário ou prefixo antes do @).
-    // NUNCA expõe o @gmail.com ou qualquer domínio de e-mail publicamente nos scripts.
-    function getAuthorDisplayName(p) {
-        if (!p) return 'Anônimo';
-        if (p.display_name && p.display_name.trim()) return p.display_name.trim();
-        if (p.email) return p.email.split('@')[0];
-        return 'Anônimo';
-    }
-
-    // Busca o e-mail, nome de exibição e status de admin de quem postou cada script,
+    // Busca o e-mail de quem postou cada script (pra mostrar "autor"),
     // usando cache pra não repetir consultas.
     async function loadAuthorsFor(list) {
-        const ids = [...new Set(list.map(s => s.user_id).filter(id => id && (!profilesById[id] || profilesById[id].is_admin === undefined || profilesById[id].display_name === undefined)))];
+        const ids = [...new Set(list.map(s => s.user_id).filter(id => id && !profilesById[id]))];
         if (ids.length === 0) return;
         try {
-            const { data, error } = await sb.from('profiles').select('id, email, is_admin, display_name').in('id', ids);
-            if (!error && data) {
-                data.forEach(p => {
-                    profilesById[p.id] = {
-                        id: p.id,
-                        email: p.email,
-                        display_name: p.display_name,
-                        is_admin: p.is_admin === true
-                    };
-                });
-            }
+            const { data, error } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
+            if (!error && data) data.forEach(p => { profilesById[p.id] = p; });
         } catch (e) { /* autor fica "Anônimo" se não der pra carregar */ }
     }
 
@@ -1417,16 +1273,22 @@
         }, 1800);
     }
 
-    // Contador REAL de cópias (não é um número inventado). Usa uma função no
-    // banco (increment_copy_count) que só faz essa soma — ver SQL em anexo.
+    function copyCountLabel(n) {
+        return `&#x1F525; ${n} ${n === 1 ? 'conta copiou' : 'contas copiaram'}`;
+    }
+
+    // Contador REAL: cada conta conta no máximo UMA vez por script (a regra é
+    // garantida no banco pela função register_copy — ver SQL em anexo).
+    // Visitantes sem conta podem copiar normalmente, mas não entram na contagem.
     async function incrementCopyCount(scriptId) {
+        if (!currentUser) return;
         try {
-            const { error } = await sb.rpc('increment_copy_count', { p_script_id: scriptId });
-            if (!error) {
+            const { data, error } = await sb.rpc('register_copy', { p_script_id: scriptId });
+            if (!error && typeof data === 'number') {
                 const s = scriptsData.find(x => x.id === scriptId);
-                if (s) s.copy_count = (s.copy_count || 0) + 1;
+                if (s) s.copy_count = data;
                 const badge = document.querySelector(`[data-copy-count="${scriptId}"]`);
-                if (badge && s) badge.innerHTML = `&#x1F525; ${s.copy_count} cópias`;
+                if (badge) badge.innerHTML = copyCountLabel(data);
             }
         } catch (e) { /* contador é um extra visual — falha aqui não deve travar a cópia */ }
     }
@@ -1454,32 +1316,23 @@
         filtered.forEach((s, i) => {
             const showEdit = currentUser && (isAdmin || s.user_id === currentUser.id);
             const showDelete = isAdmin;
-            const profile = s.user_id && profilesById[s.user_id];
-            const author = getAuthorDisplayName(profile);
-            const isOwner = !!(profile && profile.is_admin) || (currentUser && s.user_id === currentUser.id && isAdmin);
+            const author = s.user_id && profilesById[s.user_id] ? profilesById[s.user_id].email : 'Anônimo';
             const copyCount = typeof s.copy_count === 'number' ? s.copy_count : null;
+            // Selo: scripts postados pela conta do dono (is_admin no banco, protegido por RLS/gatilho)
+            const ownerPost = !!(s.user_id && profilesById[s.user_id] && profilesById[s.user_id].is_admin);
 
             html += `
-                <div class="script-card ${isOwner ? 'is-owner-script' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s">
+                <div class="script-card ${ownerPost ? 'owner-post' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s">
                     <div class="script-info">
-                        <div class="script-icon" ${isOwner ? 'style="border: 1px solid rgba(16,185,129,0.45); box-shadow: 0 0 14px rgba(16,185,129,0.25);"' : ''}>${gameIcon(s.game)}</div>
-                        <div style="min-width:0; flex:1;">
-                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-                                <h3 style="margin:0;">${escapeHtml(s.name)}</h3>
-                                ${isOwner ? `
-                                    <span class="badge-owner-safe" title="Opção mais segura — Postado pelo Dono">
-                                        <span class="badge-shield">&#x1F6E1;&#xFE0F;</span>
-                                        <span class="badge-safe-text">Opção mais segura</span>
-                                        <span class="badge-dot">&#x2022;</span>
-                                        <span class="badge-owner-tag">&#x1F451; Postado por Dono</span>
-                                    </span>
-                                ` : ''}
-                            </div>
+                        <div class="script-icon">${gameIcon(s.game)}</div>
+                        <div style="min-width:0;">
+                            <h3>${escapeHtml(s.name)}</h3>
+                            ${ownerPost ? '<div class="owner-badge" title="Script publicado pela conta do dono do site (não é uma auditoria técnica)"><span aria-hidden="true">&#x1F6E1;&#xFE0F;</span> Opção mais segura · Postado pelo dono</div>' : ''}
                             <div class="script-meta-row">
                                 <span class="tag"><span class="tag-icon">${gameIcon(s.game)}</span>${escapeHtml(s.game)}</span>
-                                <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}${isOwner ? ' <span class="admin-badge">&#x1F451; DONO</span>' : ''}</span>
+                                <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}</span>
                                 ${s.created_at ? `<span class="meta-chip">&#x1F5D3;&#xFE0F; ${formatDate(s.created_at)}</span>` : ''}
-                                ${copyCount !== null ? `<span class="meta-chip" data-copy-count="${s.id}">&#x1F525; ${copyCount} cópias</span>` : ''}
+                                ${copyCount !== null ? `<span class="meta-chip" data-copy-count="${s.id}">${copyCountLabel(copyCount)}</span>` : ''}
                             </div>
                         </div>
                     </div>
@@ -1682,39 +1535,23 @@
         let html = '<div class="executor-list">';
         list.forEach((m, i) => {
             const k = MACRO_KINDS[m.kind] || MACRO_KINDS.macro;
-            const isMacro = m.kind === 'macro';
-            const macroLink = safeUrl(m.url);
-
             html += `
                 <div class="executor-card" style="animation-delay:${Math.min(i, 10) * 0.05}s">
                     <div class="executor-info">
                         <div class="executor-icon">${k.icon}</div>
                         <div style="min-width:0; flex:1;">
-                            <h3>
-                                ${isMacro && macroLink
-                                    ? `<a class="macro-link-title" href="${escapeHtml(macroLink)}" target="_blank" rel="noopener noreferrer" title="Abrir link direto">
-                                        ${escapeHtml(m.name)} <span class="macro-link-arrow">&#x2197;</span>
-                                       </a>`
-                                    : escapeHtml(m.name)
-                                }
-                                <span class="kind-badge ${k.cls}">${k.label}</span>
-                                ${isMacro ? `<span class="tag-link-direct">&#x1F517; Link Direto</span>` : ''}
-                            </h3>
+                            <h3>${escapeHtml(m.name)} <span class="kind-badge ${k.cls}">${k.label}</span></h3>
                             ${m.description ? `<p>${escapeHtml(m.description)}</p>` : ''}
-                            ${isMacro && macroLink ? `<div style="margin-top:6px;"><a href="${escapeHtml(macroLink)}" target="_blank" rel="noopener noreferrer" style="font-size:12px; color:var(--accent); text-decoration:none; word-break:break-all; display:inline-flex; align-items:center; gap:4px;">&#x1F517; ${escapeHtml(macroLink)}</a></div>` : ''}
-                            ${m.content && m.kind === 'flag' ? `<details class="macro-details">
-                                <summary>Ver conteúdo das flags</summary>
-                                <pre>${escapeHtml(m.content)}</pre>
-                            </details>` : (m.content ? `<details class="macro-details">
+                            ${m.content ? `<details class="macro-details">
                                 <summary>Ver conteúdo</summary>
                                 <pre>${escapeHtml(m.content)}</pre>
-                            </details>` : '')}
+                            </details>` : ''}
                         </div>
                     </div>
                     <div class="executor-actions">
                         ${m.kind === 'flag'
-                            ? `<button class="btn-primary" onclick="downloadFlag(${m.id})" type="button">&#x2B07;&#xFE0F; Baixar Flags</button>`
-                            : (macroLink ? `<a class="btn-primary" href="${escapeHtml(macroLink)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Link Direto</a>` : '')}
+                            ? `<button class="btn-primary" onclick="downloadFlag(${m.id})" type="button">&#x2B07;&#xFE0F; Baixar</button>`
+                            : (safeUrl(m.url) ? `<a class="btn-primary" href="${escapeHtml(safeUrl(m.url))}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">&#x1F517; Abrir link</a>` : '')}
                         ${m.content ? `<button class="btn-outline btn-copy" onclick="copyMacro(this, ${m.id})" type="button">&#x1F4CB; Copiar</button>` : ''}
                         ${isAdmin ? `<button class="btn-outline" onclick="openMacroModal(${m.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
                         ${isAdmin ? `<button class="btn-delete" onclick="deleteMacro(${m.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
@@ -1750,17 +1587,12 @@
         }
     }
 
-    // Mostra link direto para macros e oculta conteúdo; para flags, mostra conteúdo para download
+    // Mostra o campo de link só para macros; ajusta o texto do conteúdo conforme o tipo
     function updateMacroFormFields() {
         const isFlag = document.getElementById('macroKind').value === 'flag';
-        const urlGroup = document.getElementById('macroUrlGroup');
-        const contentGroup = document.getElementById('macroContentGroup');
-        const modalTitle = document.getElementById('macroModalTitle');
-        if (urlGroup) urlGroup.style.display = isFlag ? 'none' : 'block';
-        if (contentGroup) contentGroup.style.display = isFlag ? 'block' : 'none';
-        if (!editingMacroId && modalTitle) {
-            modalTitle.textContent = isFlag ? 'Adicionar Flag (Arquivo)' : 'Adicionar Macro (Link Direto)';
-        }
+        document.getElementById('macroUrlGroup').style.display = isFlag ? 'none' : 'block';
+        document.getElementById('macroContentLabel').textContent = isFlag ? 'Conteúdo das flags (JSON) — será baixado como arquivo' : 'Conteúdo do macro (opcional se tiver link)';
+        document.getElementById('macroContent').placeholder = isFlag ? 'Cole aqui o JSON das flags...' : 'Cole aqui o macro (opcional se você colocou um link)...';
     }
 
     // Baixa as flags como arquivo (.json se o conteúdo for JSON válido, senão .txt)
@@ -1796,7 +1628,7 @@
             const m = macrosData.find(x => x.id === id);
             if (!m) return;
             editingMacroId = id;
-            document.getElementById('macroModalTitle').textContent = m.kind === 'macro' ? 'Editar Macro (Link Direto)' : 'Editar Flag';
+            document.getElementById('macroModalTitle').textContent = 'Editar Macro / Flag';
             document.getElementById('saveMacroBtnLabel').textContent = 'Salvar Alterações';
             nameInput.value = m.name;
             kindSelect.value = m.kind;
@@ -1805,11 +1637,10 @@
             urlInput.value = m.url || '';
         } else {
             editingMacroId = null;
-            const defaultKind = macroKindFilter === 'flag' ? 'flag' : 'macro';
-            document.getElementById('macroModalTitle').textContent = defaultKind === 'macro' ? 'Adicionar Macro (Link Direto)' : 'Adicionar Flag';
+            document.getElementById('macroModalTitle').textContent = 'Adicionar Macro / Flag';
             document.getElementById('saveMacroBtnLabel').textContent = 'Salvar';
             nameInput.value = '';
-            kindSelect.value = defaultKind;
+            kindSelect.value = macroKindFilter === 'flag' ? 'flag' : 'macro';
             descInput.value = '';
             contentInput.value = '';
             urlInput.value = '';
@@ -1844,8 +1675,8 @@
         if (kind === 'flag') {
             if (!content.trim()) { contentInput.classList.add('input-error'); return showToast('Cole o JSON das flags para poder baixar.', 'warning'); }
         } else {
-            if (!rawUrl) { urlInput.classList.add('input-error'); return showToast('Cole o link direto do macro.', 'warning'); }
-            if (!url) { urlInput.classList.add('input-error'); return showToast('O link precisa começar com http:// ou https://', 'warning'); }
+            if (rawUrl && !url) { urlInput.classList.add('input-error'); return showToast('O link precisa começar com http:// ou https://', 'warning'); }
+            if (!url && !content.trim()) { urlInput.classList.add('input-error'); return showToast('Coloque o link do macro (ou cole o conteúdo).', 'warning'); }
         }
 
         const btn = document.getElementById('saveMacroBtn');
@@ -1856,17 +1687,10 @@
 
         try {
             let error;
-            const payload = {
-                name,
-                kind,
-                description: description || null,
-                content: kind === 'flag' ? content : (content || null),
-                url: kind === 'macro' ? url : null
-            };
             if (editingMacroId) {
-                ({ error } = await sb.from('macros_flags').update(payload).eq('id', editingMacroId));
+                ({ error } = await sb.from('macros_flags').update({ name, kind, description, content, url: url || null }).eq('id', editingMacroId));
             } else {
-                ({ error } = await sb.from('macros_flags').insert([payload]));
+                ({ error } = await sb.from('macros_flags').insert([{ name, kind, description, content, url: url || null }]));
             }
 
             if (error) {
@@ -1902,11 +1726,6 @@
         const memberSince = currentUser.created_at ? new Date(currentUser.created_at).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' }) : '—';
         document.getElementById('profileMemberSince').textContent = memberSince;
 
-        const myProf = profilesById[currentUser.id];
-        const dispName = (myProf && myProf.display_name) || (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.username)) || (currentUser.email ? currentUser.email.split('@')[0] : '');
-        const dispInput = document.getElementById('profileDisplayNameInput');
-        if (dispInput) dispInput.value = dispName;
-
         const own = scriptsData.filter(s => s.user_id === currentUser.id);
         document.getElementById('profileScriptCount').textContent = own.length;
 
@@ -1925,40 +1744,6 @@
         closeUserDropdown();
         document.getElementById('profileModal').style.display = 'flex';
     }
-
-    async function saveProfileDisplayName() {
-        if (!currentUser) return;
-        const input = document.getElementById('profileDisplayNameInput');
-        const newName = input.value.trim();
-        if (!newName) return showToast('Digite um nome de usuário.', 'warning');
-        if (newName.length < 3) return showToast('O nome precisa ter pelo menos 3 caracteres.', 'warning');
-
-        const btn = document.getElementById('saveDisplayNameBtn');
-        const orig = btn.innerText;
-        btn.disabled = true;
-        btn.innerText = 'Salvando...';
-
-        try {
-            await sb.auth.updateUser({ data: { display_name: newName, username: newName } });
-            const { error } = await sb.from('profiles').update({ display_name: newName }).eq('id', currentUser.id);
-            if (!error) {
-                if (profilesById[currentUser.id]) {
-                    profilesById[currentUser.id].display_name = newName;
-                }
-                updateUI();
-                filterScripts();
-                showToast('Nome de usuário salvo com sucesso!', 'success');
-            } else {
-                showToast('Erro ao atualizar nome no banco.', 'error');
-            }
-        } catch (e) {
-            showToast('Erro ao salvar nome.', 'error');
-        } finally {
-            btn.disabled = false;
-            btn.innerText = orig;
-        }
-    }
-
     function closeProfileModal() {
         document.getElementById('profileModal').style.display = 'none';
     }
@@ -1967,9 +1752,12 @@
     let commentsData = [];
     let commentsLoaded = false;
     let commentAuthors = {};   // cache { user_id: { email, is_admin } }
+    let editingCommentId = null;
+    let editingCommentDraft = '';
 
     function authorLabel(p) {
-        return getAuthorDisplayName(p);
+        // Mostra só a parte antes do @ (não expõe o e-mail inteiro nos comentários)
+        return p && p.email ? p.email.split('@')[0] : 'Anônimo';
     }
 
     function formatDateTime(iso) {
@@ -1990,7 +1778,7 @@
 
     async function fetchComments() {
         const { data, error } = await sb.from('comments')
-            .select('id, user_id, content, created_at')
+            .select('id, user_id, content, created_at, edited_at')
             .order('created_at', { ascending: false })
             .limit(100);
 
@@ -2004,7 +1792,7 @@
         const ids = [...new Set(commentsData.map(c => c.user_id).filter(id => id && !commentAuthors[id]))];
         if (ids.length) {
             try {
-                const { data: profs, error: pErr } = await sb.from('profiles').select('id, email, is_admin, display_name').in('id', ids);
+                const { data: profs, error: pErr } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
                 if (!pErr && profs) profs.forEach(p => { commentAuthors[p.id] = p; });
             } catch (e) { /* sem autor, mostra "Anônimo" */ }
         }
@@ -2024,7 +1812,9 @@
             const author = commentAuthors[c.user_id];
             const owner = !!(author && author.is_admin);
             const name = authorLabel(author);
-            const canDelete = currentUser && (isAdmin || c.user_id === currentUser.id);
+            // Só quem escreveu o comentário pode editar ou apagar (nem o admin mexe nos dos outros)
+            const isMine = !!(currentUser && c.user_id === currentUser.id);
+            const editing = isMine && editingCommentId === c.id;
             html += `
                 <div class="comment-card ${owner ? 'is-owner' : ''}">
                     <div class="comment-avatar">${escapeHtml(name.charAt(0).toUpperCase() || '?')}</div>
@@ -2032,10 +1822,16 @@
                         <div class="comment-head">
                             <span class="comment-author">${escapeHtml(name)}</span>
                             ${owner ? '<span class="admin-badge">&#x1F451; DONO</span>' : ''}
-                            <span class="comment-date">${formatDateTime(c.created_at)}</span>
-                            ${canDelete ? `<button class="comment-delete" onclick="deleteComment(${c.id})" type="button" aria-label="Apagar comentário">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
+                            <span class="comment-date">${formatDateTime(c.created_at)}${c.edited_at ? ' · editado' : ''}</span>
+                            ${isMine && !editing ? `<span class="comment-actions"><button class="comment-action" onclick="startEditComment(${c.id})" type="button" aria-label="Editar comentário">&#x270F;&#xFE0F; Editar</button><button class="comment-action danger" onclick="deleteComment(${c.id})" type="button" aria-label="Apagar comentário">&#x1F5D1;&#xFE0F; Apagar</button></span>` : ''}
                         </div>
-                        <div class="comment-text">${escapeHtml(c.content)}</div>
+                        ${editing ? `
+                            <textarea class="comment-edit-input" id="commentEditInput" rows="3" maxlength="500" oninput="editingCommentDraft = this.value">${escapeHtml(editingCommentDraft)}</textarea>
+                            <div class="comment-edit-actions">
+                                <button class="btn-outline" onclick="cancelEditComment()" type="button">Cancelar</button>
+                                <button class="btn-primary" id="commentEditSaveBtn" onclick="saveEditComment(${c.id})" type="button">Salvar</button>
+                            </div>
+                        ` : `<div class="comment-text">${escapeHtml(c.content)}</div>`}
                     </div>
                 </div>`;
         });
@@ -2076,12 +1872,64 @@
         }
     }
 
-    async function deleteComment(id) {
+    function startEditComment(id) {
+        const c = commentsData.find(x => x.id === id);
+        if (!c || !currentUser || c.user_id !== currentUser.id) return showToast('Você só pode editar os seus próprios comentários.', 'error');
+        editingCommentId = id;
+        editingCommentDraft = c.content;
+        renderComments();
+        const el = document.getElementById('commentEditInput');
+        if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+    }
+
+    function cancelEditComment() {
+        editingCommentId = null;
+        editingCommentDraft = '';
+        renderComments();
+    }
+
+    async function saveEditComment(id) {
         if (!currentUser) return;
+        const content = editingCommentDraft.trim();
+        const input = document.getElementById('commentEditInput');
+        if (!content) { if (input) input.classList.add('input-error'); return showToast('O comentário não pode ficar vazio.', 'warning'); }
+        if (content.length > 500) return showToast('O comentário pode ter no máximo 500 caracteres.', 'warning');
+
+        const btn = document.getElementById('commentEditSaveBtn');
+        if (btn) { if (btn.disabled) return; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>'; }
+
+        try {
+            const { data, error } = await sb.from('comments')
+                .update({ content })
+                .eq('id', id)
+                .eq('user_id', currentUser.id)
+                .select('id');
+            if (error) {
+                console.error(error);
+                showToast(friendlyDbError('Erro ao salvar a edição.'), 'error');
+            } else if (!data || data.length === 0) {
+                showToast('Você não tem permissão para editar este comentário.', 'error');
+            } else {
+                editingCommentId = null;
+                editingCommentDraft = '';
+                showToast('Comentário atualizado!', 'success');
+                fetchComments();
+                return;
+            }
+        } catch (e) {
+            showToast(friendlyDbError(), 'error');
+        }
+        if (btn) { btn.disabled = false; btn.textContent = 'Salvar'; }
+    }
+
+    async function deleteComment(id) {
+        const c = commentsData.find(x => x.id === id);
+        if (!currentUser || !c || c.user_id !== currentUser.id) return showToast('Você só pode apagar os seus próprios comentários.', 'error');
         if (!confirm('Apagar este comentário?')) return;
-        const { error } = await sb.from('comments').delete().eq('id', id);
-        if (!error) { fetchComments(); showToast('Comentário apagado.', 'success'); }
-        else { console.error(error); showToast(friendlyDbError('Erro ao apagar o comentário.'), 'error'); }
+        const { data, error } = await sb.from('comments').delete().eq('id', id).eq('user_id', currentUser.id).select('id');
+        if (error) { console.error(error); showToast(friendlyDbError('Erro ao apagar o comentário.'), 'error'); }
+        else if (!data || data.length === 0) showToast('Você não tem permissão para apagar este comentário.', 'error');
+        else { fetchComments(); showToast('Comentário apagado.', 'success'); }
     }
 
     /* ===================== INICIALIZAÇÃO ===================== */
