@@ -244,6 +244,12 @@
             gap: 16px; flex-wrap: wrap;
         }
         .script-card.owner-post { border-color: rgba(16,185,129,0.4); }
+        .risk-badge {
+            display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 800;
+            padding: 2px 9px; border-radius: 999px; border: 1px solid transparent; cursor: help;
+        }
+        .risk-badge.risk { background: rgba(239,68,68,0.14); color: var(--danger); border-color: rgba(239,68,68,0.4); }
+        .risk-badge.safe { background: rgba(16,185,129,0.12); color: var(--success); border-color: rgba(16,185,129,0.35); }
         .owner-badge {
             display: inline-flex; align-items: center; gap: 6px; margin: 0 0 8px;
             background: rgba(16,185,129,0.14); color: var(--success); border: 1px solid rgba(16,185,129,0.35);
@@ -694,6 +700,14 @@
             <label for="scriptCode">Código do Script</label>
             <textarea id="scriptCode" rows="4" placeholder="Cole o código lua aqui..."></textarea>
         </div>
+        <div class="form-group">
+            <label for="scriptBanRisk">Risco de ban</label>
+            <select id="scriptBanRisk">
+                <option value="">Não informado</option>
+                <option value="safe">Sem risco de ban</option>
+                <option value="risk">Com risco de ban</option>
+            </select>
+        </div>
         <div class="modal-actions">
             <button class="btn-outline" onclick="closeScriptModal()" type="button">Cancelar</button>
             <button class="btn-primary" id="saveScriptBtn" onclick="saveScript()" type="button"><span id="saveScriptBtnLabel">Salvar na Nuvem</span></button>
@@ -720,6 +734,14 @@
         <div class="form-group">
             <label for="executorDesc">Descrição (opcional)</label>
             <textarea id="executorDesc" rows="3" placeholder="Observações, compatibilidade, versão, etc."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="executorBanRisk">Risco de ban</label>
+            <select id="executorBanRisk">
+                <option value="">Não informado</option>
+                <option value="safe">Sem risco de ban</option>
+                <option value="risk">Com risco de ban</option>
+            </select>
         </div>
         <div class="modal-actions">
             <button class="btn-outline" onclick="closeExecutorModal()" type="button">Cancelar</button>
@@ -863,6 +885,13 @@
     function safeUrl(u) {
         const v = String(u ?? '').trim();
         return /^https?:\/\//i.test(v) ? v : '';
+    }
+
+    // Selo de risco de ban — é uma informação de quem postou, não uma garantia
+    function banRiskBadge(v) {
+        if (v === 'risk') return '<span class="risk-badge risk" title="Quem postou informou que existe risco de ban"><span aria-hidden="true">&#x26A0;&#xFE0F;</span> Risco de ban</span>';
+        if (v === 'safe') return '<span class="risk-badge safe" title="Quem postou informou que não há risco de ban conhecido. Não é garantia."><span aria-hidden="true">&#x2705;</span> Sem risco de ban</span>';
+        return '';
     }
 
     function formatDate(iso) {
@@ -1164,10 +1193,14 @@
 
         try {
             let error;
+            const banRisk = document.getElementById('scriptBanRisk').value || null;
+            const editingItem = editingScriptId ? scriptsData.find(x => x.id === editingScriptId) : null;
+            // Só envia ban_risk se foi escolhido (ou se a coluna já existe no registro) — assim nada quebra antes de rodar o SQL
+            const extra = (banRisk || (editingItem && 'ban_risk' in editingItem)) ? { ban_risk: banRisk } : {};
             if (editingScriptId) {
-                ({ error } = await sb.from('scripts').update({ name, game, code }).eq('id', editingScriptId));
+                ({ error } = await sb.from('scripts').update({ name, game, code, ...extra }).eq('id', editingScriptId));
             } else {
-                ({ error } = await sb.from('scripts').insert([{ name, game, code, user_id: currentUser.id }]));
+                ({ error } = await sb.from('scripts').insert([{ name, game, code, user_id: currentUser.id, ...extra }]));
             }
 
             if (error) {
@@ -1214,6 +1247,7 @@
             nameInput.value = s.name;
             gameSelect.value = s.game;
             codeInput.value = s.code;
+            document.getElementById('scriptBanRisk').value = s.ban_risk || '';
         } else {
             editingScriptId = null;
             document.getElementById('scriptModalTitle').textContent = 'Adicionar Novo Script';
@@ -1221,6 +1255,7 @@
             nameInput.value = '';
             gameSelect.value = GAMES[0].id;
             codeInput.value = '';
+            document.getElementById('scriptBanRisk').value = '';
         }
 
         document.getElementById('scriptModal').style.display = 'flex';
@@ -1329,6 +1364,7 @@
                             <h3>${escapeHtml(s.name)}</h3>
                             ${ownerPost ? '<div class="owner-badge" title="Script publicado pela conta do dono do site (não é uma auditoria técnica)"><span aria-hidden="true">&#x1F6E1;&#xFE0F;</span> Opção mais segura · Postado pelo dono</div>' : ''}
                             <div class="script-meta-row">
+                                ${banRiskBadge(s.ban_risk)}
                                 <span class="tag"><span class="tag-icon">${gameIcon(s.game)}</span>${escapeHtml(s.game)}</span>
                                 <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}</span>
                                 ${s.created_at ? `<span class="meta-chip">&#x1F5D3;&#xFE0F; ${formatDate(s.created_at)}</span>` : ''}
@@ -1377,7 +1413,7 @@
                     <div class="executor-info">
                         <div class="executor-icon">${iconHtml}</div>
                         <div style="min-width:0;">
-                            <h3>${escapeHtml(ex.name)} <span class="verified-badge">&#x2713; OFICIAL</span></h3>
+                            <h3>${escapeHtml(ex.name)} <span class="verified-badge">&#x2713; OFICIAL</span> ${banRiskBadge(ex.ban_risk)}</h3>
                             ${ex.description ? `<p>${escapeHtml(ex.description)}</p>` : ''}
                         </div>
                     </div>
@@ -1411,6 +1447,7 @@
             urlInput.value = ex.url;
             imageInput.value = ex.image_url || '';
             descInput.value = ex.description || '';
+            document.getElementById('executorBanRisk').value = ex.ban_risk || '';
         } else {
             editingExecutorId = null;
             document.getElementById('executorModalTitle').textContent = 'Adicionar Executor Oficial';
@@ -1419,6 +1456,7 @@
             urlInput.value = '';
             imageInput.value = '';
             descInput.value = '';
+            document.getElementById('executorBanRisk').value = '';
         }
         document.getElementById('executorModal').style.display = 'flex';
         setTimeout(() => nameInput.focus(), 50);
@@ -1440,6 +1478,9 @@
         const url = urlInput.value.trim();
         const image_url = imageInput.value.trim();
         const description = descInput.value.trim();
+        const banRisk = document.getElementById('executorBanRisk').value || null;
+        const editingEx = editingExecutorId ? executorsData.find(x => x.id === editingExecutorId) : null;
+        const extra = (banRisk || (editingEx && 'ban_risk' in editingEx)) ? { ban_risk: banRisk } : {};
 
         nameInput.classList.remove('input-error');
         urlInput.classList.remove('input-error');
@@ -1456,9 +1497,9 @@
         try {
             let error;
             if (editingExecutorId) {
-                ({ error } = await sb.from('executors').update({ name, url, image_url, description }).eq('id', editingExecutorId));
+                ({ error } = await sb.from('executors').update({ name, url, image_url, description, ...extra }).eq('id', editingExecutorId));
             } else {
-                ({ error } = await sb.from('executors').insert([{ name, url, image_url, description }]));
+                ({ error } = await sb.from('executors').insert([{ name, url, image_url, description, ...extra }]));
             }
 
             if (error) {
