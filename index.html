@@ -401,6 +401,65 @@
         .comment-edit-input:focus { outline: none; border-color: var(--accent); }
         .comment-edit-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
 
+        /* ============== COMENTÁRIOS POR SCRIPT ============== */
+        .script-comments-toggle {
+            display: flex; align-items: center; gap: 6px;
+            background: none; border: none; color: var(--text-muted); cursor: pointer;
+            font-size: 13px; font-weight: 600; padding: 8px 0 0; font-family: inherit;
+            transition: color .2s ease;
+        }
+        .script-comments-toggle:hover { color: var(--text-main); }
+        .script-comments-toggle .toggle-arrow { transition: transform .25s var(--ease); display: inline-block; }
+        .script-comments-toggle.open .toggle-arrow { transform: rotate(90deg); }
+        .script-comments-area {
+            display: none; margin-top: 12px; padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .script-comments-area.open { display: block; animation: fadeInUp 0.3s var(--ease) both; }
+        .script-comment-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+        .script-comment-card {
+            display: flex; gap: 10px; background: var(--bg-color); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 10px 12px;
+        }
+        .script-comment-card.is-owner { border-color: rgba(245,158,11,0.35); }
+        .sc-avatar {
+            width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--accent), var(--danger));
+            display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; color: white;
+        }
+        .sc-body { min-width: 0; flex: 1; }
+        .sc-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 2px; }
+        .sc-author { font-weight: 700; font-size: 12.5px; }
+        .sc-date { font-size: 10.5px; color: var(--text-faint); }
+        .sc-text { font-size: 13px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; color: #d4d4d8; }
+        .sc-actions { margin-left: auto; display: inline-flex; gap: 2px; }
+        .sc-action { background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; font-family: inherit; }
+        .sc-action:hover { color: var(--text-main); background: var(--panel-hover); }
+        .sc-action.danger:hover { color: var(--danger); background: var(--danger-soft); }
+        .sc-form { display: flex; gap: 8px; align-items: flex-end; }
+        .sc-form textarea {
+            flex: 1; resize: none; min-height: 40px; max-height: 100px; padding: 8px 10px;
+            border-radius: var(--radius-sm); background: var(--bg-color); border: 1px solid var(--border);
+            color: white; font-family: inherit; font-size: 13px; line-height: 1.4;
+        }
+        .sc-form textarea:focus { outline: none; border-color: var(--accent); }
+        .sc-form button {
+            padding: 8px 14px; border-radius: var(--radius-sm); background: var(--accent); color: white;
+            border: none; font-weight: 600; font-size: 12.5px; cursor: pointer; white-space: nowrap;
+            font-family: inherit; transition: background .2s ease;
+        }
+        .sc-form button:hover { background: var(--accent-hover); }
+        .sc-form button:disabled { opacity: .6; cursor: not-allowed; }
+        .sc-login-hint { font-size: 12.5px; color: var(--text-faint); padding: 4px 0; }
+        .sc-empty { font-size: 12.5px; color: var(--text-faint); text-align: center; padding: 10px 0; }
+        .sc-edit-input {
+            width: 100%; resize: none; min-height: 36px; padding: 6px 8px; border-radius: 6px;
+            background: var(--bg-color); border: 1px solid var(--border); color: white; font-family: inherit; font-size: 12.5px; margin-top: 2px;
+        }
+        .sc-edit-input:focus { outline: none; border-color: var(--accent); }
+        .sc-edit-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 4px; }
+        .sc-edit-actions button { font-size: 11.5px; padding: 4px 10px; }
+
         /* ============== FOOTER ============== */
         .footer { text-align: center; color: var(--text-faint); font-size: 12.5px; margin-top: 46px; padding: 24px 0 10px; border-top: 1px solid var(--border); }
         .footer-brand { font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
@@ -1356,26 +1415,36 @@
             // Selo: scripts postados pela conta do dono (is_admin no banco, protegido por RLS/gatilho)
             const ownerPost = !!(s.user_id && profilesById[s.user_id] && profilesById[s.user_id].is_admin);
 
+            const scCount = scriptCommentsCache[s.id] ? scriptCommentsCache[s.id].length : 0;
             html += `
-                <div class="script-card ${ownerPost ? 'owner-post' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s">
-                    <div class="script-info">
-                        <div class="script-icon">${gameIcon(s.game)}</div>
-                        <div style="min-width:0;">
-                            <h3>${escapeHtml(s.name)}</h3>
-                            ${ownerPost ? '<div class="owner-badge" title="Script publicado pela conta do dono do site (não é uma auditoria técnica)"><span aria-hidden="true">&#x1F6E1;&#xFE0F;</span> Opção mais segura · Postado pelo dono</div>' : ''}
-                            <div class="script-meta-row">
-                                ${banRiskBadge(s.ban_risk)}
-                                <span class="tag"><span class="tag-icon">${gameIcon(s.game)}</span>${escapeHtml(s.game)}</span>
-                                <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}</span>
-                                ${s.created_at ? `<span class="meta-chip">&#x1F5D3;&#xFE0F; ${formatDate(s.created_at)}</span>` : ''}
-                                ${copyCount !== null ? `<span class="meta-chip" data-copy-count="${s.id}">${copyCountLabel(copyCount)}</span>` : ''}
+                <div class="script-card ${ownerPost ? 'owner-post' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s; flex-direction:column;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; width:100%;">
+                        <div class="script-info">
+                            <div class="script-icon">${gameIcon(s.game)}</div>
+                            <div style="min-width:0;">
+                                <h3>${escapeHtml(s.name)}</h3>
+                                ${ownerPost ? '<div class="owner-badge" title="Script publicado pela conta do dono do site (não é uma auditoria técnica)"><span aria-hidden="true">&#x1F6E1;&#xFE0F;</span> Opção mais segura · Postado pelo dono</div>' : ''}
+                                <div class="script-meta-row">
+                                    ${banRiskBadge(s.ban_risk)}
+                                    <span class="tag"><span class="tag-icon">${gameIcon(s.game)}</span>${escapeHtml(s.game)}</span>
+                                    <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}</span>
+                                    ${s.created_at ? `<span class="meta-chip">&#x1F5D3;&#xFE0F; ${formatDate(s.created_at)}</span>` : ''}
+                                    ${copyCount !== null ? `<span class="meta-chip" data-copy-count="${s.id}">${copyCountLabel(copyCount)}</span>` : ''}
+                                </div>
                             </div>
                         </div>
+                        <div class="action-btns">
+                            <button class="btn-outline btn-copy" onclick="copyScript(this, ${s.id})" type="button">&#x1F4CB; Copiar Script</button>
+                            ${showEdit ? `<button class="btn-outline" onclick="openScriptModal(${s.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
+                            ${showDelete ? `<button class="btn-delete" onclick="deleteScript(${s.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
+                        </div>
                     </div>
-                    <div class="action-btns">
-                        <button class="btn-outline btn-copy" onclick="copyScript(this, ${s.id})" type="button">&#x1F4CB; Copiar Script</button>
-                        ${showEdit ? `<button class="btn-outline" onclick="openScriptModal(${s.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
-                        ${showDelete ? `<button class="btn-delete" onclick="deleteScript(${s.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
+                    <!-- Comentários do script -->
+                    <div style="width:100%;">
+                        <button class="script-comments-toggle" onclick="toggleScriptComments(this, ${s.id})" type="button">
+                            <span class="toggle-arrow">▶</span> &#x1F4AC; Comentários${scCount > 0 ? ' (' + scCount + ')' : ''}
+                        </button>
+                        <div class="script-comments-area" id="sc-area-${s.id}"></div>
                     </div>
                 </div>
             `;
@@ -1973,6 +2042,251 @@
         else { fetchComments(); showToast('Comentário apagado.', 'success'); }
     }
 
+    /* ===================== COMENTÁRIOS POR SCRIPT ===================== */
+    // Cache de comentários por script: { scriptId: [comentários] }
+    let scriptCommentsCache = {};
+    let scriptCommentAuthors = {}; // cache de autores dos comentários por script
+    let editingSCId = null;
+    let editingSCDraft = '';
+
+    // Busca os comentários de um script específico
+    async function fetchScriptComments(scriptId) {
+        try {
+            const { data, error } = await sb.from('script_comments')
+                .select('id, user_id, script_id, content, created_at, edited_at')
+                .eq('script_id', scriptId)
+                .order('created_at', { ascending: true })
+                .limit(50);
+
+            if (error) {
+                console.error('Erro ao buscar comentários do script:', error);
+                scriptCommentsCache[scriptId] = [];
+                return;
+            }
+
+            scriptCommentsCache[scriptId] = data || [];
+
+            // Carrega autores
+            const ids = [...new Set((data || []).map(c => c.user_id).filter(id => id && !scriptCommentAuthors[id]))];
+            if (ids.length) {
+                try {
+                    const { data: profs, error: pErr } = await sb.from('profiles').select('id, email, is_admin').in('id', ids);
+                    if (!pErr && profs) profs.forEach(p => { scriptCommentAuthors[p.id] = p; });
+                } catch (e) { /* sem autor, mostra "Anônimo" */ }
+            }
+        } catch (e) {
+            scriptCommentsCache[scriptId] = [];
+        }
+    }
+
+    // Busca a contagem de comentários de todos os scripts de uma vez
+    async function fetchAllScriptCommentCounts() {
+        try {
+            const { data, error } = await sb.from('script_comments')
+                .select('id, script_id');
+            if (!error && data) {
+                // Agrupa por script_id
+                const counts = {};
+                data.forEach(c => {
+                    if (!counts[c.script_id]) counts[c.script_id] = [];
+                    counts[c.script_id].push(c);
+                });
+                // Atualiza o cache com arrays vazios para scripts sem comentários
+                scriptCommentsCache = counts;
+            }
+        } catch (e) { /* sem contagem, mostra 0 */ }
+    }
+
+    function toggleScriptComments(btn, scriptId) {
+        const area = document.getElementById('sc-area-' + scriptId);
+        const isOpen = area.classList.contains('open');
+
+        if (isOpen) {
+            area.classList.remove('open');
+            btn.classList.remove('open');
+            return;
+        }
+
+        btn.classList.add('open');
+        area.classList.add('open');
+        area.innerHTML = '<div style="text-align:center; padding:12px;"><span class="spinner"></span></div>';
+
+        // Busca os comentários deste script
+        fetchScriptComments(scriptId).then(() => {
+            renderScriptComments(scriptId);
+        });
+    }
+
+    function renderScriptComments(scriptId) {
+        const area = document.getElementById('sc-area-' + scriptId);
+        if (!area) return;
+
+        const comments = scriptCommentsCache[scriptId] || [];
+        let html = '';
+
+        // Lista de comentários
+        if (comments.length === 0) {
+            html += '<div class="sc-empty">Nenhum comentário neste script ainda. Seja o primeiro!</div>';
+        } else {
+            html += '<div class="script-comment-list">';
+            comments.forEach(c => {
+                const author = scriptCommentAuthors[c.user_id];
+                const owner = !!(author && author.is_admin);
+                const name = author && author.email ? author.email.split('@')[0] : 'Anônimo';
+                const isMine = !!(currentUser && c.user_id === currentUser.id);
+                const editing = isMine && editingSCId === c.id;
+
+                html += `
+                    <div class="script-comment-card ${owner ? 'is-owner' : ''}">
+                        <div class="sc-avatar">${escapeHtml(name.charAt(0).toUpperCase() || '?')}</div>
+                        <div class="sc-body">
+                            <div class="sc-head">
+                                <span class="sc-author">${escapeHtml(name)}</span>
+                                ${owner ? '<span class="admin-badge" style="font-size:9px; padding:1px 5px;">&#x1F451; DONO</span>' : ''}
+                                <span class="sc-date">${formatDateTime(c.created_at)}${c.edited_at ? ' · editado' : ''}</span>
+                                ${isMine && !editing ? `<span class="sc-actions"><button class="sc-action" onclick="startEditSC(${c.id}, ${scriptId})" type="button">&#x270F;&#xFE0F;</button><button class="sc-action danger" onclick="deleteSC(${c.id}, ${scriptId})" type="button">&#x1F5D1;&#xFE0F;</button></span>` : ''}
+                            </div>
+                            ${editing ? `
+                                <textarea class="sc-edit-input" id="scEditInput" rows="2" maxlength="300" oninput="editingSCDraft = this.value">${escapeHtml(editingSCDraft)}</textarea>
+                                <div class="sc-edit-actions">
+                                    <button class="btn-outline" onclick="cancelEditSC(${scriptId})" type="button" style="padding:4px 10px; font-size:11.5px;">Cancelar</button>
+                                    <button class="btn-primary" id="scEditSaveBtn" onclick="saveEditSC(${c.id}, ${scriptId})" type="button" style="padding:4px 10px; font-size:11.5px;">Salvar</button>
+                                </div>
+                            ` : `<div class="sc-text">${escapeHtml(c.content)}</div>`}
+                        </div>
+                    </div>`;
+            });
+            html += '</div>';
+        }
+
+        // Formulário de novo comentário
+        if (currentUser) {
+            html += `
+                <div class="sc-form" style="margin-top:10px;">
+                    <textarea id="scInput-${scriptId}" rows="1" maxlength="300" placeholder="Comente sobre este script..." oninput="autoGrowSC(this)"></textarea>
+                    <button onclick="postScriptComment(this, ${scriptId})" type="button">Enviar</button>
+                </div>`;
+        } else {
+            html += `<div class="sc-login-hint" style="margin-top:8px;">Faça <button class="btn-link" onclick="openAuthModal('login')" type="button" style="font-size:12.5px;">login</button> para comentar.</div>`;
+        }
+
+        area.innerHTML = html;
+    }
+
+    function autoGrowSC(el) {
+        el.style.height = 'auto';
+        el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+    }
+
+    async function postScriptComment(btn, scriptId) {
+        if (!currentUser) return openAuthModal('login');
+        const input = document.getElementById('scInput-' + scriptId);
+        if (!input) return;
+        const content = input.value.trim();
+        if (!content) return showToast('Escreva alguma coisa.', 'warning');
+        if (content.length > 300) return showToast('O comentário pode ter no máximo 300 caracteres.', 'warning');
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner" style="width:12px;height:12px;"></span>';
+
+        try {
+            const { error } = await sb.from('script_comments').insert([{
+                content,
+                user_id: currentUser.id,
+                script_id: scriptId
+            }]);
+            if (error) {
+                console.error(error);
+                if (error.message && error.message.includes('Aguarde')) showToast('Aguarde antes de comentar de novo.', 'warning');
+                else showToast(friendlyDbError('Erro ao enviar o comentário.'), 'error');
+            } else {
+                showToast('Comentário publicado!', 'success');
+                await fetchScriptComments(scriptId);
+                renderScriptComments(scriptId);
+                // Atualiza o contador no botão toggle
+                const toggleBtn = document.querySelector(`button[onclick="toggleScriptComments(this, ${scriptId})"]`);
+                if (toggleBtn) {
+                    const count = (scriptCommentsCache[scriptId] || []).length;
+                    toggleBtn.innerHTML = `<span class="toggle-arrow" style="transform:rotate(90deg)">▶</span> &#x1F4AC; Comentários${count > 0 ? ' (' + count + ')' : ''}`;
+                }
+            }
+        } catch (e) {
+            showToast(friendlyDbError(), 'error');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Enviar';
+        }
+    }
+
+    function startEditSC(commentId, scriptId) {
+        const comments = scriptCommentsCache[scriptId] || [];
+        const c = comments.find(x => x.id === commentId);
+        if (!c || !currentUser || c.user_id !== currentUser.id) return;
+        editingSCId = commentId;
+        editingSCDraft = c.content;
+        renderScriptComments(scriptId);
+        const el = document.getElementById('scEditInput');
+        if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+    }
+
+    function cancelEditSC(scriptId) {
+        editingSCId = null;
+        editingSCDraft = '';
+        renderScriptComments(scriptId);
+    }
+
+    async function saveEditSC(commentId, scriptId) {
+        if (!currentUser) return;
+        const content = editingSCDraft.trim();
+        if (!content) return showToast('O comentário não pode ficar vazio.', 'warning');
+        if (content.length > 300) return showToast('Máximo de 300 caracteres.', 'warning');
+
+        const btn = document.getElementById('scEditSaveBtn');
+        if (btn) { if (btn.disabled) return; btn.disabled = true; btn.innerHTML = '<span class="spinner" style="width:10px;height:10px;"></span>'; }
+
+        try {
+            const { data, error } = await sb.from('script_comments')
+                .update({ content })
+                .eq('id', commentId)
+                .eq('user_id', currentUser.id)
+                .select('id');
+            if (error) {
+                showToast(friendlyDbError('Erro ao salvar.'), 'error');
+            } else if (!data || data.length === 0) {
+                showToast('Sem permissão para editar.', 'error');
+            } else {
+                editingSCId = null;
+                editingSCDraft = '';
+                showToast('Comentário atualizado!', 'success');
+                await fetchScriptComments(scriptId);
+                renderScriptComments(scriptId);
+                return;
+            }
+        } catch (e) {
+            showToast(friendlyDbError(), 'error');
+        }
+        if (btn) { btn.disabled = false; btn.textContent = 'Salvar'; }
+    }
+
+    async function deleteSC(commentId, scriptId) {
+        if (!currentUser) return;
+        if (!confirm('Apagar este comentário?')) return;
+        const { data, error } = await sb.from('script_comments').delete().eq('id', commentId).eq('user_id', currentUser.id).select('id');
+        if (error) showToast(friendlyDbError('Erro ao apagar.'), 'error');
+        else if (!data || data.length === 0) showToast('Sem permissão para apagar.', 'error');
+        else {
+            showToast('Comentário apagado.', 'success');
+            await fetchScriptComments(scriptId);
+            renderScriptComments(scriptId);
+            // Atualiza o contador
+            const toggleBtn = document.querySelector(`button[onclick="toggleScriptComments(this, ${scriptId})"]`);
+            if (toggleBtn) {
+                const count = (scriptCommentsCache[scriptId] || []).length;
+                toggleBtn.innerHTML = `<span class="toggle-arrow" style="transform:rotate(90deg)">▶</span> &#x1F4AC; Comentários${count > 0 ? ' (' + count + ')' : ''}`;
+            }
+        }
+    }
+
     /* ===================== INICIALIZAÇÃO ===================== */
     document.getElementById('footerYear').textContent = new Date().getFullYear();
     renderCategoryTabs();
@@ -1982,6 +2296,7 @@
     fetchExecutors();
     fetchMacros();
     fetchComments();
+    fetchAllScriptCommentCounts();
 </script>
 
 <!-- Fundo animado low-poly (efeito visual, não interfere na funcionalidade do site) -->
