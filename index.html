@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NinjaExec Ofice — Scripts, Executores, Macros e Flags para Roblox</title>
-    <meta name="description" content="Biblioteca colaborativa de scripts para jogos do Roblox (Blox Fruits, Adopt Me!, Brookhaven e mais) e lista de executores oficiais.">
-    <meta property="og:title" content="NinjaExec Ofice">
-    <meta property="og:description" content="Biblioteca colaborativa de scripts para jogos do Roblox e executores oficiais.">
+    <title>NinjaExec Oficial — Scripts, Executores, Macros e Flags para Roblox</title>
+    <meta name="description" content="Biblioteca colaborativa oficial de scripts para jogos do Roblox (Blox Fruits, Adopt Me!, Brookhaven e mais) e lista de executores oficiais.">
+    <meta property="og:title" content="NinjaExec Oficial">
+    <meta property="og:description" content="Biblioteca colaborativa oficial de scripts para jogos do Roblox e executores oficiais.">
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#0a0e14">
 
@@ -342,7 +342,7 @@
         .profile-scripts-list { max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
         .profile-script-item { background: var(--bg-color); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
 
-        /* ============== DISCORD & DOAÇÃO ============== */
+        /* ============== REDES & DOAÇÃO ============== */
         .btn-discord {
             display: inline-flex; align-items: center; gap: 7px;
             background: #5865f2; color: #fff; text-decoration: none;
@@ -351,6 +351,14 @@
             transition: all 0.2s var(--ease); box-shadow: 0 4px 12px rgba(88,101,242,0.35);
         }
         .btn-discord:hover { background: #4752c4; transform: translateY(-1px); }
+        .btn-youtube {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: #ff0000; color: #fff; text-decoration: none;
+            padding: 10px 16px; border-radius: var(--radius-sm);
+            font-weight: 700; font-size: 14px; white-space: nowrap;
+            transition: all 0.2s var(--ease); box-shadow: 0 4px 12px rgba(255,0,0,0.35);
+        }
+        .btn-youtube:hover { background: #cc0000; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(255,0,0,0.45); }
         .btn-donate {
             display: inline-flex; align-items: center; gap: 7px;
             background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border: none;
@@ -376,6 +384,54 @@
         }
         .donate-banner strong { display: block; font-size: 15px; margin-bottom: 3px; color: #fbbf24; }
         .donate-banner span { font-size: 13px; color: var(--text-muted); }
+
+        /* ============== PLATAFORMAS & STATUS VOTE & CODE PREVIEW ============== */
+        .platform-badges { display: inline-flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+        .plat-badge {
+            display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700;
+            padding: 2px 8px; border-radius: 6px; background: #131926; border: 1px solid var(--border);
+            color: var(--text-muted); letter-spacing: -0.2px;
+        }
+        .plat-badge.pc { color: #60a5fa; border-color: rgba(96,165,250,0.35); background: rgba(96,165,250,0.08); }
+        .plat-badge.android { color: #4ade80; border-color: rgba(74,222,128,0.35); background: rgba(74,222,128,0.08); }
+        .plat-badge.ios { color: #f472b6; border-color: rgba(244,114,182,0.35); background: rgba(244,114,182,0.08); }
+
+        .status-votes-wrap { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .btn-status-vote {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: var(--bg-color); border: 1px solid var(--border); border-radius: 999px;
+            padding: 3px 10px; font-size: 11.5px; font-weight: 700; color: var(--text-muted);
+            cursor: pointer; transition: all 0.2s var(--ease); font-family: inherit;
+        }
+        .btn-status-vote:hover { border-color: var(--border-strong); color: var(--text-main); }
+        .btn-status-vote.working.voted { background: rgba(16,185,129,0.16); border-color: var(--success); color: var(--success); }
+        .btn-status-vote.patched.voted { background: rgba(239,68,68,0.16); border-color: var(--danger); color: var(--danger); }
+        .btn-status-vote .vote-count { font-weight: 800; font-size: 11px; opacity: 0.95; }
+
+        .script-code-preview { margin-top: 10px; width: 100%; }
+        .script-code-preview summary {
+            cursor: pointer; font-size: 12.5px; color: var(--text-muted); font-weight: 600;
+            display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+            border-radius: 6px; background: var(--bg-color); border: 1px solid var(--border);
+            transition: all 0.2s var(--ease); user-select: none;
+        }
+        .script-code-preview summary:hover { color: var(--text-main); border-color: var(--border-strong); }
+        .code-preview-box {
+            margin-top: 8px; background: #070a10; border: 1px solid var(--border); border-radius: var(--radius-sm);
+            padding: 12px; max-height: 220px; overflow: auto;
+        }
+        .code-preview-box pre {
+            margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px; line-height: 1.5; color: #7dd3fc; white-space: pre-wrap; word-break: break-all;
+        }
+
+        .btn-video {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #ef4444 !important; border-color: rgba(239,68,68,0.4) !important;
+        }
+        .btn-video:hover {
+            background: rgba(239,68,68,0.12) !important; border-color: #ef4444 !important;
+        }
 
         /* ============== COMENTÁRIOS ============== */
         .comment-form { background: var(--panel-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px; }
@@ -601,20 +657,22 @@
                 </svg>
             </div>
             <div class="title">
-                <h1>NinjaExec Ofice</h1>
+                <h1>NinjaExec Oficial</h1>
                 <div class="sync-status"><div class="dot"></div> Nuvem sincronizada</div>
             </div>
         </div>
 
         <div class="header-actions" id="guestActions">
-            <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar</button>
+            <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar via Pix</button>
+            <a class="btn-youtube" href="https://www.youtube.com/@NinjaExec" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">&#x25B6;&#xFE0F;</span> YouTube</a>
             <a class="btn-discord" href="https://discord.gg/uRdscNU8Bq" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-outline" onclick="openAuthModal('login')">Entrar</button>
             <button class="btn-primary" onclick="openAuthModal('register')">Criar Conta</button>
         </div>
 
         <div class="header-actions" id="userActions" style="display:none;">
-            <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar</button>
+            <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar via Pix</button>
+            <a class="btn-youtube" href="https://www.youtube.com/@NinjaExec" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">&#x25B6;&#xFE0F;</span> YouTube</a>
             <a class="btn-discord" href="https://discord.gg/uRdscNU8Bq" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-primary" id="postScriptBtn" onclick="openScriptModal()">+ Postar Script</button>
             <div class="user-menu" id="userMenu">
@@ -724,22 +782,22 @@
 
     <div class="discord-banner">
         <div>
-            <strong>Nosso grupo no Discord</strong>
-            <span>Entre no grupo para falar com a gente.</span>
+            <strong>Nosso Servidor no Discord</strong>
+            <span id="discordBannerSub">Carregando membros da comunidade...</span>
         </div>
         <a class="btn-discord" href="https://discord.gg/uRdscNU8Bq" target="_blank" rel="noopener noreferrer">&#x1F4AC; Entrar no Discord</a>
     </div>
 
     <div class="donate-banner">
         <div>
-            <strong>💛 Apoie o NinjaExec Ofice</strong>
-            <span>Faça uma doação via Gmail / Pix e ajude a manter os scripts e executores sempre atualizados!</span>
+            <strong>💛 Apoie o NinjaExec Oficial</strong>
+            <span>Faça uma doação via Pix e ajude a manter os scripts e executores sempre atualizados!</span>
         </div>
-        <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar via Gmail</button>
+        <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar via Pix</button>
     </div>
 
     <div class="footer">
-        <div class="footer-brand">&#x1F977; NinjaExec Ofice</div>
+        <div class="footer-brand">&#x1F977; NinjaExec Oficial</div>
         <div class="footer-version">v2.0 · Feito para a comunidade Roblox · © <span id="footerYear"></span></div>
     </div>
 </div>
@@ -749,6 +807,18 @@
 <div class="modal-overlay" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" onmousedown="handleBackdropClick(event,'authModal')">
     <div class="modal" onmousedown="event.stopPropagation()">
         <h2 id="authTitle">Entrar</h2>
+
+        <button class="btn-discord" onclick="loginWithDiscord()" type="button" style="width:100%; justify-content:center; margin-bottom:14px; padding:12px 16px; font-size:14px; border-radius:var(--radius-sm);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            Entrar com Discord
+        </button>
+
+        <div style="display:flex; align-items:center; gap:10px; margin: 10px 0 16px; color:var(--text-faint); font-size:11.5px; font-weight:700;">
+            <div style="flex:1; height:1px; background:var(--border);"></div>
+            <span>OU COM E-MAIL</span>
+            <div style="flex:1; height:1px; background:var(--border);"></div>
+        </div>
+
         <div class="form-group">
             <label for="authEmail">E-mail</label>
             <input type="email" id="authEmail" placeholder="seu@email.com" onkeydown="if(event.key==='Enter') handleAuth()" autocomplete="email">
@@ -787,6 +857,24 @@
             <textarea id="scriptCode" rows="4" placeholder="Cole o código lua aqui..."></textarea>
         </div>
         <div class="form-group">
+            <label for="scriptYoutubeUrl">Link do Tutorial no YouTube (URL do vídeo - Opcional)</label>
+            <input type="url" id="scriptYoutubeUrl" placeholder="https://www.youtube.com/watch?v=... ou https://youtu.be/...">
+        </div>
+        <div class="form-group">
+            <label>Plataformas Compatíveis</label>
+            <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; font-size:13px;">
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="platPc" value="pc" checked> 💻 PC / Windows
+                </label>
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="platAndroid" value="android" checked> 📱 Android
+                </label>
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="platIos" value="ios"> 🍎 iOS / Mac
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="scriptBanRisk">Risco de ban</label>
             <select id="scriptBanRisk">
                 <option value="">Não informado</option>
@@ -820,6 +908,20 @@
         <div class="form-group">
             <label for="executorDesc">Descrição (opcional)</label>
             <textarea id="executorDesc" rows="3" placeholder="Observações, compatibilidade, versão, etc."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Plataformas Suportadas</label>
+            <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; font-size:13px;">
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="exPlatPc" value="pc" checked> 💻 PC / Windows
+                </label>
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="exPlatAndroid" value="android" checked> 📱 Android
+                </label>
+                <label style="display:inline-flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="checkbox" id="exPlatIos" value="ios"> 🍎 iOS / Mac
+                </label>
+            </div>
         </div>
         <div class="form-group">
             <label for="executorBanRisk">Risco de ban</label>
@@ -897,39 +999,60 @@
 <div class="modal-overlay" id="donateModal" role="dialog" aria-modal="true" aria-labelledby="donateTitle" onmousedown="handleBackdropClick(event,'donateModal')">
     <div class="modal" onmousedown="event.stopPropagation()">
         <h2 id="donateTitle" style="display:flex; align-items:center; gap:8px;">
-            <span>💛</span> Apoiar com Doação
+            <span>💛</span> Apoiar com Pix
         </h2>
         <p style="color:var(--text-muted); font-size:13.5px; margin-top:-14px; margin-bottom:18px; line-height:1.5;">
-            Ajude a manter o <strong>NinjaExec Ofice</strong> ativo e com novidades! Você pode contribuir usando o Gmail abaixo como chave Pix ou entrando em contato por e-mail.
+            Ajude a manter o <strong>NinjaExec Oficial</strong> ativo, seguro e com novidades! O e-mail abaixo é a nossa <strong>Chave Pix oficial</strong>.
         </p>
 
         <div style="background:var(--bg-color); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin-bottom:16px;">
             <div style="font-size:11.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
-                E-mail para Doação / Chave Pix
+                Chave Pix (Tipo: E-mail)
             </div>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--panel-raised); border:1px solid var(--border-strong); border-radius:8px; padding:10px 14px;">
                 <span id="donateEmailText" style="font-size:14px; font-weight:700; color:#fbbf24; font-family:monospace; overflow-wrap:anywhere;">rafael2008lz2@gmail.com</span>
                 <button class="btn-primary" onclick="copyDonateEmail(this)" type="button" style="padding:7px 14px; font-size:12.5px; flex-shrink:0;">
-                    &#x1F4CB; Copiar
+                    &#x1F4CB; Copiar Chave
                 </button>
             </div>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
-            <a class="btn-outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=rafael2008lz2@gmail.com&su=Doa%C3%A7%C3%A3o%20NinjaExec%20Ofice&body=Ol%C3%A1%2C%20gostaria%20de%20apoiar%20o%20projeto%20NinjaExec%20Ofice!" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
-                &#x2709;&#xFE0F; Abrir no Gmail (Web)
+            <a class="btn-outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=rafael2008lz2@gmail.com&su=Doa%C3%A7%C3%A3o%20Pix%20-%20NinjaExec%20Oficial&body=Ol%C3%A1%2C%20enviei%20um%20Pix%20para%20apoiar%20o%20NinjaExec%20Oficial!" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+                &#x2709;&#xFE0F; Enviar Comprovante via Gmail (Web)
             </a>
-            <a class="btn-outline" href="mailto:rafael2008lz2@gmail.com?subject=Doa%C3%A7%C3%A3o%20NinjaExec%20Ofice&body=Ol%C3%A1%2C%20gostaria%20de%20apoiar%20o%20projeto%20NinjaExec%20Ofice!" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+            <a class="btn-outline" href="mailto:rafael2008lz2@gmail.com?subject=Doa%C3%A7%C3%A3o%20Pix%20-%20NinjaExec%20Oficial&body=Ol%C3%A1%2C%20enviei%20um%20Pix%20para%20apoiar%20o%20NinjaExec%20Oficial!" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
                 &#x1F4E7; Abrir no Aplicativo de E-mail
             </a>
         </div>
 
         <div style="font-size:12px; color:var(--text-faint); line-height:1.5; background:rgba(245,158,11,0.08); border:1px dashed rgba(245,158,11,0.25); border-radius:8px; padding:10px 12px;">
-            &#x1F4A1; <strong>Como doar:</strong> Copie o e-mail acima e utilize no seu aplicativo bancário na opção <strong>Pix &gt; Chave E-mail</strong>, ou envie uma mensagem diretamente para nós!
+            &#x1F4A1; <strong>Como doar pelo banco:</strong> Abra seu aplicativo de banco, vá em <strong>Pix &gt; Transferir / Pagar &gt; Chave E-mail</strong>, cole <strong>rafael2008lz2@gmail.com</strong> e confirme qualquer valor. Toda contribuição ajuda muito!
         </div>
 
         <div class="modal-actions" style="margin-top:20px;">
             <button class="btn-outline" onclick="closeDonateModal()" type="button">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Vídeo / Tutorial YouTube -->
+<div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" onmousedown="handleBackdropClick(event,'videoModal')">
+    <div class="modal" style="width: 680px; max-width: 95vw;" onmousedown="event.stopPropagation()">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:10px;">
+            <h2 id="videoModalTitle" style="margin:0; font-size:17.5px; display:flex; align-items:center; gap:8px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                <span style="color:#ff0000;">▶️</span> Tutorial do Script
+            </h2>
+            <button class="btn-outline" onclick="closeVideoModal()" type="button" style="padding:4px 10px; font-size:16px; border:none; line-height:1; cursor:pointer;" aria-label="Fechar vídeo">✕</button>
+        </div>
+        <div style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; background:#000; border:1px solid var(--border-strong); box-shadow:0 8px 24px rgba(0,0,0,0.6);">
+            <iframe id="videoIframe" src="" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-actions" style="margin-top:16px; justify-content:space-between; align-items:center;">
+            <a id="videoExternalLink" class="btn-outline" href="#" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:13px;">
+                <span>🔗</span> Abrir no YouTube
+            </a>
+            <button class="btn-primary" onclick="closeVideoModal()" type="button">Fechar</button>
         </div>
     </div>
 </div>
@@ -1054,19 +1177,179 @@
 
     function handleBackdropClick(event, modalId) {
         if (event.target.id === modalId) {
-            document.getElementById(modalId).style.display = 'none';
+            if (modalId === 'videoModal') closeVideoModal();
+            else document.getElementById(modalId).style.display = 'none';
         }
     }
 
     // ESC fecha qualquer modal aberto
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
-        ['authModal', 'scriptModal', 'executorModal', 'macroModal', 'profileModal', 'donateModal'].forEach(id => {
+        ['authModal', 'scriptModal', 'executorModal', 'macroModal', 'profileModal', 'donateModal', 'videoModal'].forEach(id => {
             const m = document.getElementById(id);
-            if (m && m.style.display === 'flex') m.style.display = 'none';
+            if (m && m.style.display === 'flex') {
+                if (id === 'videoModal') closeVideoModal();
+                else m.style.display = 'none';
+            }
         });
         closeUserDropdown();
     });
+
+    /* ===================== AUTENTICAÇÃO COM DISCORD (OAUTH) ===================== */
+    async function loginWithDiscord() {
+        try {
+            const { error } = await sb.auth.signInWithOAuth({
+                provider: 'discord',
+                options: {
+                    redirectTo: window.location.origin + window.location.pathname
+                }
+            });
+            if (error) showToast(translateAuthError(error.message), 'error');
+        } catch (e) {
+            showToast('Erro ao iniciar login com o Discord.', 'error');
+        }
+    }
+
+    /* ===================== CONTADOR ONLINE DO DISCORD ===================== */
+    async function fetchDiscordOnlineCount() {
+        const sub = document.getElementById('discordBannerSub');
+        if (!sub) return;
+        try {
+            const res = await fetch('https://discord.com/api/v9/invites/uRdscNU8Bq?with_counts=true');
+            if (res.ok) {
+                const data = await res.json();
+                const online = data.approximate_presence_count;
+                const total = data.approximate_member_count;
+                if (typeof online === 'number') {
+                    sub.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px;"><span class="dot" style="background:#10b981; box-shadow:0 0 8px #10b981;"></span> <strong>${online.toLocaleString('pt-BR')} membros online</strong> ${total ? `· (${total.toLocaleString('pt-BR')} no servidor)` : ''} · Participe agora!</span>`;
+                    return;
+                }
+            }
+        } catch (e) {
+            // Silencioso em caso de erro na API pública do Discord
+        }
+        sub.textContent = 'Entre na comunidade oficial para tirar dúvidas, pegar scripts exclusivos e bater papo.';
+    }
+
+    /* ===================== YOUTUBE & TUTORIAIS ===================== */
+    function parseYoutubeEmbed(url) {
+        if (!url) return null;
+        let id = '';
+        const reg = /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = String(url).match(reg);
+        if (match && match[1]) id = match[1];
+        return id ? `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0` : null;
+    }
+
+    function openVideoModal(url, title) {
+        const embedUrl = parseYoutubeEmbed(url);
+        const iframe = document.getElementById('videoIframe');
+        const titleEl = document.getElementById('videoModalTitle');
+        const extLink = document.getElementById('videoExternalLink');
+        if (titleEl) titleEl.innerHTML = `<span style="color:#ff0000;">▶️</span> ${escapeHtml(title || 'Tutorial do Script')}`;
+        if (extLink) extLink.href = safeUrl(url) || '#';
+        if (embedUrl) {
+            iframe.src = embedUrl;
+        } else if (safeUrl(url)) {
+            iframe.src = safeUrl(url);
+        }
+        document.getElementById('videoModal').style.display = 'flex';
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const iframe = document.getElementById('videoIframe');
+        if (iframe) iframe.src = '';
+        if (modal) modal.style.display = 'none';
+    }
+
+    /* ===================== PLATAFORMAS (BADGES) ===================== */
+    function renderPlatformBadges(platforms) {
+        let list = [];
+        if (Array.isArray(platforms)) {
+            list = platforms;
+        } else if (typeof platforms === 'string' && platforms.trim()) {
+            list = platforms.split(',').map(p => p.trim().toLowerCase());
+        } else {
+            list = ['pc', 'android'];
+        }
+        const map = {
+            pc: { icon: '💻', label: 'PC', cls: 'pc', title: 'Compatível com PC / Windows' },
+            android: { icon: '📱', label: 'Android', cls: 'android', title: 'Compatível com Celular / Android' },
+            ios: { icon: '🍎', label: 'iOS', cls: 'ios', title: 'Compatível com iPhone / iPad / Mac' }
+        };
+        const badgesHtml = list.map(p => {
+            const item = map[p];
+            if (!item) return '';
+            return `<span class="plat-badge ${item.cls}" title="${item.title}">${item.icon} ${item.label}</span>`;
+        }).filter(Boolean).join('');
+
+        return badgesHtml ? `<div class="platform-badges">${badgesHtml}</div>` : '';
+    }
+
+    /* ===================== SISTEMA DE STATUS E VOTOS (WORKING / PATCHED) ===================== */
+    let scriptVotesCache = {}; // { [scriptId]: { working: number, patched: number } }
+    let myScriptVotes = {};    // { [scriptId]: 'working' | 'patched' }
+
+    function loadLocalVotes() {
+        try {
+            const userVotes = localStorage.getItem('ninja_script_user_votes');
+            if (userVotes) myScriptVotes = JSON.parse(userVotes);
+            const cachedVotes = localStorage.getItem('ninja_script_votes_cache');
+            if (cachedVotes) scriptVotesCache = JSON.parse(cachedVotes);
+        } catch(e) {}
+    }
+
+    function getScriptVotes(s) {
+        const cached = scriptVotesCache[s.id] || {};
+        const working = typeof s.working_count === 'number' ? s.working_count : (cached.working || 0);
+        const patched = typeof s.patched_count === 'number' ? s.patched_count : (cached.patched || 0);
+        return { working, patched };
+    }
+
+    async function voteScriptStatus(scriptId, voteType) {
+        if (!currentUser) {
+            showToast('Entre na sua conta para avaliar os scripts!', 'warning');
+            return openAuthModal('login');
+        }
+        const currentVote = myScriptVotes[scriptId];
+        if (currentVote === voteType) {
+            return showToast('Você já votou nesta opção!', 'info');
+        }
+
+        const s = scriptsData.find(x => x.id === scriptId);
+        if (!scriptVotesCache[scriptId]) {
+            scriptVotesCache[scriptId] = s ? getScriptVotes(s) : { working: 0, patched: 0 };
+        }
+        const votes = scriptVotesCache[scriptId];
+
+        if (currentVote === 'working') votes.working = Math.max(0, votes.working - 1);
+        if (currentVote === 'patched') votes.patched = Math.max(0, votes.patched - 1);
+
+        if (voteType === 'working') votes.working++;
+        if (voteType === 'patched') votes.patched++;
+
+        myScriptVotes[scriptId] = voteType;
+        try {
+            localStorage.setItem('ninja_script_user_votes', JSON.stringify(myScriptVotes));
+            localStorage.setItem('ninja_script_votes_cache', JSON.stringify(scriptVotesCache));
+        } catch(e) {}
+
+        if (s) {
+            s.working_count = votes.working;
+            s.patched_count = votes.patched;
+        }
+
+        try {
+            await sb.from('scripts').update({
+                working_count: votes.working,
+                patched_count: votes.patched
+            }).eq('id', scriptId);
+        } catch(e) {}
+
+        filterScripts();
+        showToast(voteType === 'working' ? 'Obrigado! Marcado como Funcionando 👍' : 'Aviso registrado: Marcado como Patched 👎', 'success');
+    }
 
     /* ===================== DOAÇÃO ===================== */
     function openDonateModal() {
@@ -1092,10 +1375,10 @@
             }
             const orig = btn.innerHTML;
             btn.innerHTML = '&#x2713; Copiado!';
-            showToast('Gmail copiado para a área de transferência!', 'success');
+            showToast('Chave Pix copiada com sucesso!', 'success');
             setTimeout(() => { btn.innerHTML = orig; }, 2000);
         } catch (e) {
-            showToast('E-mail: rafael2008lz2@gmail.com', 'info');
+            showToast('Chave Pix: rafael2008lz2@gmail.com', 'info');
         }
     }
 
@@ -1333,14 +1616,24 @@
 
         const nameInput = document.getElementById('scriptName');
         const codeInput = document.getElementById('scriptCode');
+        const youtubeInput = document.getElementById('scriptYoutubeUrl');
         const name = nameInput.value.trim();
         const game = document.getElementById('scriptGame').value;
         const code = codeInput.value;
+        const rawYoutube = youtubeInput ? youtubeInput.value.trim() : '';
+        const youtube_url = rawYoutube ? safeUrl(rawYoutube) : null;
+
+        const platforms = [];
+        if (document.getElementById('platPc')?.checked) platforms.push('pc');
+        if (document.getElementById('platAndroid')?.checked) platforms.push('android');
+        if (document.getElementById('platIos')?.checked) platforms.push('ios');
+        const platformStr = platforms.join(',') || 'pc,android';
 
         nameInput.classList.remove('input-error');
         codeInput.classList.remove('input-error');
         if (!name) { nameInput.classList.add('input-error'); return showToast('Preencha o nome do script.', 'warning'); }
         if (!code.trim()) { codeInput.classList.add('input-error'); return showToast('Cole o código do script.', 'warning'); }
+        if (rawYoutube && !youtube_url) return showToast('O link do YouTube precisa começar com http:// ou https://', 'warning');
 
         const btn = document.getElementById('saveScriptBtn');
         if (btn.disabled) return;
@@ -1353,12 +1646,28 @@
             let error;
             const banRisk = document.getElementById('scriptBanRisk').value || null;
             const editingItem = editingScriptId ? scriptsData.find(x => x.id === editingScriptId) : null;
-            // Só envia ban_risk se foi escolhido (ou se a coluna já existe no registro) — assim nada quebra antes de rodar o SQL
-            const extra = (banRisk || (editingItem && 'ban_risk' in editingItem)) ? { ban_risk: banRisk } : {};
+            const extra = {
+                ...(banRisk || (editingItem && 'ban_risk' in editingItem) ? { ban_risk: banRisk } : {}),
+                ...(youtube_url ? { youtube_url } : (editingItem && 'youtube_url' in editingItem ? { youtube_url: null } : {})),
+                ...(platformStr ? { platforms: platformStr } : (editingItem && 'platforms' in editingItem ? { platforms: null } : {}))
+            };
+
             if (editingScriptId) {
-                ({ error } = await sb.from('scripts').update({ name, game, code, ...extra }).eq('id', editingScriptId));
+                let res = await sb.from('scripts').update({ name, game, code, ...extra }).eq('id', editingScriptId);
+                error = res.error;
+                // Fallback gracioso caso colunas opcionais ainda não existam no banco
+                if (error && (error.code === '42703' || (error.message && (error.message.includes('youtube') || error.message.includes('platforms'))))) {
+                    res = await sb.from('scripts').update({ name, game, code }).eq('id', editingScriptId);
+                    error = res.error;
+                }
             } else {
-                ({ error } = await sb.from('scripts').insert([{ name, game, code, user_id: currentUser.id, ...extra }]));
+                let res = await sb.from('scripts').insert([{ name, game, code, user_id: currentUser.id, ...extra }]);
+                error = res.error;
+                // Fallback gracioso
+                if (error && (error.code === '42703' || (error.message && (error.message.includes('youtube') || error.message.includes('platforms'))))) {
+                    res = await sb.from('scripts').insert([{ name, game, code, user_id: currentUser.id }]);
+                    error = res.error;
+                }
             }
 
             if (error) {
@@ -1366,7 +1675,7 @@
                 showToast(error.code === '42501' ? 'Você não tem permissão para essa ação.' : friendlyDbError('Erro ao salvar o script.'), 'error');
             } else {
                 closeScriptModal();
-                showToast(editingScriptId ? 'Script atualizado!' : 'Script salvo com sucesso!', 'success');
+                showToast(editingScriptId ? 'Script atualizado com sucesso!' : 'Script salvo com sucesso!', 'success');
                 fetchScripts();
             }
         } catch (e) {
@@ -1392,6 +1701,7 @@
         const nameInput = document.getElementById('scriptName');
         const gameSelect = document.getElementById('scriptGame');
         const codeInput = document.getElementById('scriptCode');
+        const youtubeInput = document.getElementById('scriptYoutubeUrl');
         nameInput.classList.remove('input-error');
         codeInput.classList.remove('input-error');
 
@@ -1405,7 +1715,13 @@
             nameInput.value = s.name;
             gameSelect.value = s.game;
             codeInput.value = s.code;
+            if (youtubeInput) youtubeInput.value = s.youtube_url || '';
             document.getElementById('scriptBanRisk').value = s.ban_risk || '';
+
+            const pList = s.platforms ? (Array.isArray(s.platforms) ? s.platforms : String(s.platforms).split(',')) : ['pc', 'android'];
+            if (document.getElementById('platPc')) document.getElementById('platPc').checked = pList.includes('pc');
+            if (document.getElementById('platAndroid')) document.getElementById('platAndroid').checked = pList.includes('android');
+            if (document.getElementById('platIos')) document.getElementById('platIos').checked = pList.includes('ios');
         } else {
             editingScriptId = null;
             document.getElementById('scriptModalTitle').textContent = 'Adicionar Novo Script';
@@ -1413,7 +1729,11 @@
             nameInput.value = '';
             gameSelect.value = GAMES[0].id;
             codeInput.value = '';
+            if (youtubeInput) youtubeInput.value = '';
             document.getElementById('scriptBanRisk').value = '';
+            if (document.getElementById('platPc')) document.getElementById('platPc').checked = true;
+            if (document.getElementById('platAndroid')) document.getElementById('platAndroid').checked = true;
+            if (document.getElementById('platIos')) document.getElementById('platIos').checked = false;
         }
 
         document.getElementById('scriptModal').style.display = 'flex';
@@ -1435,7 +1755,6 @@
             if (navigator.clipboard && window.isSecureContext) {
                 await navigator.clipboard.writeText(code);
             } else {
-                // Fallback para navegadores/sites sem permissão de Clipboard API
                 const ta = document.createElement('textarea');
                 ta.value = code;
                 ta.style.position = 'fixed';
@@ -1446,7 +1765,7 @@
                 document.body.removeChild(ta);
             }
             markCopyFeedback(btn, true);
-            showToast('Script copiado!', 'success');
+            showToast('Script copiado para a área de transferência!', 'success');
             incrementCopyCount(scriptId);
         } catch (e) {
             markCopyFeedback(btn, false);
@@ -1467,12 +1786,9 @@
     }
 
     function copyCountLabel(n) {
-        return `&#x1F525; ${n} ${n === 1 ? 'conta copiou' : 'contas copiaram'}`;
+        return `&#x1F525; ${n} ${n === 1 ? 'copiou' : 'copiaram'}`;
     }
 
-    // Contador REAL: cada conta conta no máximo UMA vez por script (a regra é
-    // garantida no banco pela função register_copy — ver SQL em anexo).
-    // Visitantes sem conta podem copiar normalmente, mas não entram na contagem.
     async function incrementCopyCount(scriptId) {
         if (!currentUser) return;
         try {
@@ -1483,7 +1799,7 @@
                 const badge = document.querySelector(`[data-copy-count="${scriptId}"]`);
                 if (badge) badge.innerHTML = copyCountLabel(data);
             }
-        } catch (e) { /* contador é um extra visual — falha aqui não deve travar a cópia */ }
+        } catch (e) {}
     }
 
     function filterScripts() {
@@ -1511,19 +1827,27 @@
             const showDelete = isAdmin;
             const author = s.user_id && profilesById[s.user_id] ? profilesById[s.user_id].email : 'Anônimo';
             const copyCount = typeof s.copy_count === 'number' ? s.copy_count : null;
-            // Selo: scripts postados pela conta do dono (is_admin no banco, protegido por RLS/gatilho)
             const ownerPost = !!(s.user_id && profilesById[s.user_id] && profilesById[s.user_id].is_admin);
+
+            // Votos e Status Comunitário
+            const votes = getScriptVotes(s);
+            const myVote = myScriptVotes[s.id];
+            const isPatchedAlert = votes.patched > votes.working && votes.patched >= 2;
 
             const scCount = scriptCommentsCache[s.id] ? scriptCommentsCache[s.id].length : 0;
             html += `
-                <div class="script-card ${ownerPost ? 'owner-post' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s; flex-direction:column;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; width:100%;">
+                <div class="script-card ${ownerPost ? 'owner-post' : ''}" style="animation-delay:${Math.min(i, 10) * 0.04}s; flex-direction:column; align-items:stretch;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; width:100%;">
                         <div class="script-info">
                             <div class="script-icon">${gameIcon(s.game)}</div>
-                            <div style="min-width:0;">
-                                <h3>${escapeHtml(s.name)}</h3>
-                                ${ownerPost ? '<div class="owner-badge" title="Script publicado pela conta do dono do site (não é uma auditoria técnica)"><span aria-hidden="true">&#x1F6E1;&#xFE0F;</span> Opção mais segura · Postado pelo dono</div>' : ''}
-                                <div class="script-meta-row">
+                            <div style="min-width:0; flex:1;">
+                                <h3 style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                                    <span>${escapeHtml(s.name)}</span>
+                                    ${isPatchedAlert ? '<span class="risk-badge risk" title="Vários membros reportaram este script como desatualizado"><span aria-hidden="true">&#x1F534;</span> Atenção: Patched</span>' : ''}
+                                </h3>
+                                ${ownerPost ? '<div class="owner-badge" title="Script verificado e publicado pelo dono do site"><span aria-hidden="true">&#x1F6E1;&#xFE0F;</span> Recomendado · Postado pelo Dono</div>' : ''}
+                                <div class="script-meta-row" style="margin-top:6px;">
+                                    ${renderPlatformBadges(s.platforms)}
                                     ${banRiskBadge(s.ban_risk)}
                                     <span class="tag"><span class="tag-icon">${gameIcon(s.game)}</span>${escapeHtml(s.game)}</span>
                                     <span class="meta-chip">&#x270D;&#xFE0F; ${escapeHtml(author)}</span>
@@ -1532,14 +1856,37 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="action-btns">
-                            <button class="btn-outline btn-copy" onclick="copyScript(this, ${s.id})" type="button">&#x1F4CB; Copiar Script</button>
-                            ${showEdit ? `<button class="btn-outline" onclick="openScriptModal(${s.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
-                            ${showDelete ? `<button class="btn-delete" onclick="deleteScript(${s.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
+
+                        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                            <div class="action-btns">
+                                <button class="btn-outline btn-copy" onclick="copyScript(this, ${s.id})" type="button">&#x1F4CB; Copiar</button>
+                                ${s.youtube_url ? `<button class="btn-outline btn-video" onclick="openVideoModal('${escapeHtml(s.youtube_url)}', '${escapeHtml(s.name.replace(/'/g, "\\'"))}')" type="button"><span aria-hidden="true">&#x25B6;&#xFE0F;</span> Tutorial</button>` : ''}
+                                ${showEdit ? `<button class="btn-outline" onclick="openScriptModal(${s.id})" type="button">&#x270F;&#xFE0F; Editar</button>` : ''}
+                                ${showDelete ? `<button class="btn-delete" onclick="deleteScript(${s.id})" type="button">&#x1F5D1;&#xFE0F; Apagar</button>` : ''}
+                            </div>
+                            <!-- Sistema de Voto de Status (Comunitário) -->
+                            <div class="status-votes-wrap" style="margin-top:4px;">
+                                <span style="font-size:11px; color:var(--text-faint); margin-right:2px;">Status:</span>
+                                <button class="btn-status-vote working ${myVote === 'working' ? 'voted' : ''}" onclick="voteScriptStatus(${s.id}, 'working')" type="button" title="Confirmar que o script está funcionando">
+                                    <span>&#x1F44D;</span> Funciona <span class="vote-count">${votes.working}</span>
+                                </button>
+                                <button class="btn-status-vote patched ${myVote === 'patched' ? 'voted' : ''}" onclick="voteScriptStatus(${s.id}, 'patched')" type="button" title="Reportar que o script parou de funcionar">
+                                    <span>&#x1F44E;</span> Patched <span class="vote-count">${votes.patched}</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Pré-visualização de código Lua retrátil -->
+                    <details class="script-code-preview">
+                        <summary><span>&#x1F441;&#xFE0F;</span> Pré-visualizar código Lua</summary>
+                        <div class="code-preview-box">
+                            <pre><code>${escapeHtml(s.code)}</code></pre>
+                        </div>
+                    </details>
+
                     <!-- Comentários do script -->
-                    <div style="width:100%;">
+                    <div style="width:100%; margin-top:6px;">
                         <button class="script-comments-toggle" onclick="toggleScriptComments(this, ${s.id})" type="button">
                             <span class="toggle-arrow">▶</span> &#x1F4AC; Comentários${scCount > 0 ? ' (' + scCount + ')' : ''}
                         </button>
@@ -1580,8 +1927,13 @@
                 <div class="executor-card" style="animation-delay:${Math.min(i, 10) * 0.05}s">
                     <div class="executor-info">
                         <div class="executor-icon">${iconHtml}</div>
-                        <div style="min-width:0;">
-                            <h3>${escapeHtml(ex.name)} <span class="verified-badge">&#x2713; OFICIAL</span> ${banRiskBadge(ex.ban_risk)}</h3>
+                        <div style="min-width:0; flex:1;">
+                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
+                                <h3 style="margin:0;">${escapeHtml(ex.name)}</h3>
+                                <span class="verified-badge">&#x2713; OFICIAL</span>
+                                ${banRiskBadge(ex.ban_risk)}
+                                ${renderPlatformBadges(ex.platforms)}
+                            </div>
                             ${ex.description ? `<p>${escapeHtml(ex.description)}</p>` : ''}
                         </div>
                     </div>
@@ -1616,6 +1968,11 @@
             imageInput.value = ex.image_url || '';
             descInput.value = ex.description || '';
             document.getElementById('executorBanRisk').value = ex.ban_risk || '';
+
+            const pList = ex.platforms ? (Array.isArray(ex.platforms) ? ex.platforms : String(ex.platforms).split(',')) : ['pc', 'android'];
+            if (document.getElementById('exPlatPc')) document.getElementById('exPlatPc').checked = pList.includes('pc');
+            if (document.getElementById('exPlatAndroid')) document.getElementById('exPlatAndroid').checked = pList.includes('android');
+            if (document.getElementById('exPlatIos')) document.getElementById('exPlatIos').checked = pList.includes('ios');
         } else {
             editingExecutorId = null;
             document.getElementById('executorModalTitle').textContent = 'Adicionar Executor Oficial';
@@ -1625,6 +1982,9 @@
             imageInput.value = '';
             descInput.value = '';
             document.getElementById('executorBanRisk').value = '';
+            if (document.getElementById('exPlatPc')) document.getElementById('exPlatPc').checked = true;
+            if (document.getElementById('exPlatAndroid')) document.getElementById('exPlatAndroid').checked = true;
+            if (document.getElementById('exPlatIos')) document.getElementById('exPlatIos').checked = false;
         }
         document.getElementById('executorModal').style.display = 'flex';
         setTimeout(() => nameInput.focus(), 50);
@@ -1647,8 +2007,18 @@
         const image_url = imageInput.value.trim();
         const description = descInput.value.trim();
         const banRisk = document.getElementById('executorBanRisk').value || null;
+
+        const platforms = [];
+        if (document.getElementById('exPlatPc')?.checked) platforms.push('pc');
+        if (document.getElementById('exPlatAndroid')?.checked) platforms.push('android');
+        if (document.getElementById('exPlatIos')?.checked) platforms.push('ios');
+        const platformStr = platforms.join(',') || 'pc,android';
+
         const editingEx = editingExecutorId ? executorsData.find(x => x.id === editingExecutorId) : null;
-        const extra = (banRisk || (editingEx && 'ban_risk' in editingEx)) ? { ban_risk: banRisk } : {};
+        const extra = {
+            ...(banRisk || (editingEx && 'ban_risk' in editingEx) ? { ban_risk: banRisk } : {}),
+            ...(platformStr ? { platforms: platformStr } : (editingEx && 'platforms' in editingEx ? { platforms: null } : {}))
+        };
 
         nameInput.classList.remove('input-error');
         urlInput.classList.remove('input-error');
@@ -1665,9 +2035,19 @@
         try {
             let error;
             if (editingExecutorId) {
-                ({ error } = await sb.from('executors').update({ name, url, image_url, description, ...extra }).eq('id', editingExecutorId));
+                let res = await sb.from('executors').update({ name, url, image_url, description, ...extra }).eq('id', editingExecutorId);
+                error = res.error;
+                if (error && (error.code === '42703' || (error.message && error.message.includes('platforms')))) {
+                    res = await sb.from('executors').update({ name, url, image_url, description }).eq('id', editingExecutorId);
+                    error = res.error;
+                }
             } else {
-                ({ error } = await sb.from('executors').insert([{ name, url, image_url, description, ...extra }]));
+                let res = await sb.from('executors').insert([{ name, url, image_url, description, ...extra }]);
+                error = res.error;
+                if (error && (error.code === '42703' || (error.message && error.message.includes('platforms')))) {
+                    res = await sb.from('executors').insert([{ name, url, image_url, description }]);
+                    error = res.error;
+                }
             }
 
             if (error) {
@@ -2388,6 +2768,7 @@
 
     /* ===================== INICIALIZAÇÃO ===================== */
     document.getElementById('footerYear').textContent = new Date().getFullYear();
+    loadLocalVotes();
     renderCategoryTabs();
     renderGameSelectOptions();
     checkUser();
@@ -2396,9 +2777,10 @@
     fetchMacros();
     fetchComments();
     fetchAllScriptCommentCounts();
+    fetchDiscordOnlineCount();
 </script>
 
-<!-- Fundo animado low-poly (efeito visual, não interfere na funcionalidade do site) -->
+<!-- Fundo animado low-poly (efeito visual otimizado: desligado em mobile e reduced-motion) -->
 <script>
 (function () {
     const canvas = document.getElementById('bg-canvas');
@@ -2407,7 +2789,15 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let width, height, points = [], triangles = [];
-    const gap = 130; // espaçamento maior = menos triângulos = mais leve
+    const gap = 130; // espaçamento balanceado
+    let time = 0;
+    let animating = false;
+    let animFrameId = null;
+
+    // Mobile First: em telas menores que 640px ou com redução de movimento, economiza GPU e bateria
+    function isMobileOrLowPerf() {
+        return reduceMotion || window.innerWidth < 640;
+    }
 
     function resize() {
         width = window.innerWidth;
@@ -2415,7 +2805,13 @@
         canvas.width = width;
         canvas.height = height;
         initPoints();
-        if (reduceMotion) drawStatic();
+
+        if (isMobileOrLowPerf()) {
+            stopAnimation();
+            drawStatic();
+        } else {
+            startAnimation();
+        }
     }
 
     function initPoints() {
@@ -2483,13 +2879,25 @@
     }
 
     function drawStatic() {
-        // Sem animação: desenha um único frame parado (respeita "reduzir movimento")
+        // Desenha frame estático de alta fidelidade sem loop de CPU
         paintTriangles(width / 2, height / 2);
     }
 
-    let time = 0;
-    let animating = true;
-    function draw() {
+    function startAnimation() {
+        if (animating || isMobileOrLowPerf()) return;
+        animating = true;
+        loop();
+    }
+
+    function stopAnimation() {
+        animating = false;
+        if (animFrameId) {
+            cancelAnimationFrame(animFrameId);
+            animFrameId = null;
+        }
+    }
+
+    function loop() {
         if (!animating) return;
         time += 0.003;
         const lx = width / 2 + Math.cos(time) * width * 0.4;
@@ -2503,18 +2911,20 @@
         });
 
         paintTriangles(lx, ly);
-        requestAnimationFrame(draw);
+        animFrameId = requestAnimationFrame(loop);
     }
 
-    // Pausa a animação quando a aba não está visível (economiza CPU/bateria)
+    // Economia de energia em segundo plano
     document.addEventListener('visibilitychange', () => {
-        animating = !document.hidden && !reduceMotion;
-        if (animating) requestAnimationFrame(draw);
+        if (document.hidden) {
+            stopAnimation();
+        } else if (!isMobileOrLowPerf()) {
+            startAnimation();
+        }
     });
 
     window.addEventListener('resize', resize);
     resize();
-    if (!reduceMotion) { animating = true; draw(); }
 })();
 
 // Rolagem horizontal das categorias com a roda do mouse (desktop)
