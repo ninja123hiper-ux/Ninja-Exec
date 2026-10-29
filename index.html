@@ -342,7 +342,7 @@
         .profile-scripts-list { max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
         .profile-script-item { background: var(--bg-color); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
 
-        /* ============== DISCORD ============== */
+        /* ============== DISCORD & DOAÇÃO ============== */
         .btn-discord {
             display: inline-flex; align-items: center; gap: 7px;
             background: #5865f2; color: #fff; text-decoration: none;
@@ -351,6 +351,15 @@
             transition: all 0.2s var(--ease); box-shadow: 0 4px 12px rgba(88,101,242,0.35);
         }
         .btn-discord:hover { background: #4752c4; transform: translateY(-1px); }
+        .btn-donate {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; border: none;
+            padding: 10px 16px; border-radius: var(--radius-sm); cursor: pointer;
+            font-weight: 700; font-size: 14px; white-space: nowrap;
+            transition: all 0.2s var(--ease); box-shadow: 0 4px 14px rgba(245,158,11,0.35);
+            font-family: inherit;
+        }
+        .btn-donate:hover { background: linear-gradient(135deg, #d97706, #c2410c); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(245,158,11,0.45); }
         .discord-banner {
             display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
             margin-top: 34px; padding: 18px 22px; border-radius: var(--radius-md);
@@ -359,6 +368,14 @@
         }
         .discord-banner strong { display: block; font-size: 15px; margin-bottom: 3px; }
         .discord-banner span { font-size: 13px; color: var(--text-muted); }
+        .donate-banner {
+            display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+            margin-top: 14px; padding: 18px 22px; border-radius: var(--radius-md);
+            background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,88,12,0.08));
+            border: 1px solid rgba(245,158,11,0.35);
+        }
+        .donate-banner strong { display: block; font-size: 15px; margin-bottom: 3px; color: #fbbf24; }
+        .donate-banner span { font-size: 13px; color: var(--text-muted); }
 
         /* ============== COMENTÁRIOS ============== */
         .comment-form { background: var(--panel-bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px; }
@@ -590,12 +607,14 @@
         </div>
 
         <div class="header-actions" id="guestActions">
+            <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar</button>
             <a class="btn-discord" href="https://discord.gg/uRdscNU8Bq" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-outline" onclick="openAuthModal('login')">Entrar</button>
             <button class="btn-primary" onclick="openAuthModal('register')">Criar Conta</button>
         </div>
 
         <div class="header-actions" id="userActions" style="display:none;">
+            <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar</button>
             <a class="btn-discord" href="https://discord.gg/uRdscNU8Bq" target="_blank" rel="noopener noreferrer">&#x1F4AC; Discord</a>
             <button class="btn-primary" id="postScriptBtn" onclick="openScriptModal()">+ Postar Script</button>
             <div class="user-menu" id="userMenu">
@@ -709,6 +728,14 @@
             <span>Entre no grupo para falar com a gente.</span>
         </div>
         <a class="btn-discord" href="https://discord.gg/uRdscNU8Bq" target="_blank" rel="noopener noreferrer">&#x1F4AC; Entrar no Discord</a>
+    </div>
+
+    <div class="donate-banner">
+        <div>
+            <strong>💛 Apoie o NinjaExec Ofice</strong>
+            <span>Faça uma doação via Gmail / Pix e ajude a manter os scripts e executores sempre atualizados!</span>
+        </div>
+        <button class="btn-donate" onclick="openDonateModal()" type="button">&#x1F4B0; Doar via Gmail</button>
     </div>
 
     <div class="footer">
@@ -866,6 +893,47 @@
     </div>
 </div>
 
+<!-- Modal de Doação -->
+<div class="modal-overlay" id="donateModal" role="dialog" aria-modal="true" aria-labelledby="donateTitle" onmousedown="handleBackdropClick(event,'donateModal')">
+    <div class="modal" onmousedown="event.stopPropagation()">
+        <h2 id="donateTitle" style="display:flex; align-items:center; gap:8px;">
+            <span>💛</span> Apoiar com Doação
+        </h2>
+        <p style="color:var(--text-muted); font-size:13.5px; margin-top:-14px; margin-bottom:18px; line-height:1.5;">
+            Ajude a manter o <strong>NinjaExec Ofice</strong> ativo e com novidades! Você pode contribuir usando o Gmail abaixo como chave Pix ou entrando em contato por e-mail.
+        </p>
+
+        <div style="background:var(--bg-color); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin-bottom:16px;">
+            <div style="font-size:11.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
+                E-mail para Doação / Chave Pix
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--panel-raised); border:1px solid var(--border-strong); border-radius:8px; padding:10px 14px;">
+                <span id="donateEmailText" style="font-size:14px; font-weight:700; color:#fbbf24; font-family:monospace; overflow-wrap:anywhere;">rafael2008lz2@gmail.com</span>
+                <button class="btn-primary" onclick="copyDonateEmail(this)" type="button" style="padding:7px 14px; font-size:12.5px; flex-shrink:0;">
+                    &#x1F4CB; Copiar
+                </button>
+            </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;">
+            <a class="btn-outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=rafael2008lz2@gmail.com&su=Doa%C3%A7%C3%A3o%20NinjaExec%20Ofice&body=Ol%C3%A1%2C%20gostaria%20de%20apoiar%20o%20projeto%20NinjaExec%20Ofice!" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+                &#x2709;&#xFE0F; Abrir no Gmail (Web)
+            </a>
+            <a class="btn-outline" href="mailto:rafael2008lz2@gmail.com?subject=Doa%C3%A7%C3%A3o%20NinjaExec%20Ofice&body=Ol%C3%A1%2C%20gostaria%20de%20apoiar%20o%20projeto%20NinjaExec%20Ofice!" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+                &#x1F4E7; Abrir no Aplicativo de E-mail
+            </a>
+        </div>
+
+        <div style="font-size:12px; color:var(--text-faint); line-height:1.5; background:rgba(245,158,11,0.08); border:1px dashed rgba(245,158,11,0.25); border-radius:8px; padding:10px 12px;">
+            &#x1F4A1; <strong>Como doar:</strong> Copie o e-mail acima e utilize no seu aplicativo bancário na opção <strong>Pix &gt; Chave E-mail</strong>, ou envie uma mensagem diretamente para nós!
+        </div>
+
+        <div class="modal-actions" style="margin-top:20px;">
+            <button class="btn-outline" onclick="closeDonateModal()" type="button">Fechar</button>
+        </div>
+    </div>
+</div>
+
 <div id="toastBox" aria-live="polite" role="status"></div>
 
 <script>
@@ -993,12 +1061,43 @@
     // ESC fecha qualquer modal aberto
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
-        ['authModal', 'scriptModal', 'executorModal', 'macroModal', 'profileModal'].forEach(id => {
+        ['authModal', 'scriptModal', 'executorModal', 'macroModal', 'profileModal', 'donateModal'].forEach(id => {
             const m = document.getElementById(id);
             if (m && m.style.display === 'flex') m.style.display = 'none';
         });
         closeUserDropdown();
     });
+
+    /* ===================== DOAÇÃO ===================== */
+    function openDonateModal() {
+        document.getElementById('donateModal').style.display = 'flex';
+    }
+    function closeDonateModal() {
+        document.getElementById('donateModal').style.display = 'none';
+    }
+    async function copyDonateEmail(btn) {
+        const email = 'rafael2008lz2@gmail.com';
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(email);
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = email;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+            }
+            const orig = btn.innerHTML;
+            btn.innerHTML = '&#x2713; Copiado!';
+            showToast('Gmail copiado para a área de transferência!', 'success');
+            setTimeout(() => { btn.innerHTML = orig; }, 2000);
+        } catch (e) {
+            showToast('E-mail: rafael2008lz2@gmail.com', 'info');
+        }
+    }
 
     // Fecha o menu do usuário se clicar fora dele
     document.addEventListener('click', (e) => {
